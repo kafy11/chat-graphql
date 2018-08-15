@@ -13,7 +13,7 @@ const schema = {
         allowNull: false
     },
     password: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.CHAR(32),
         allowNull: false
     },
     email: {
@@ -23,11 +23,15 @@ const schema = {
             isEmail: true
         }
     },
-    photo: Sequelize.STRING(500),
-    facebook_id: {
-        type: Sequelize.INTEGER,
-        default: 0
+    lat: {
+        type: Sequelize.FLOAT(10, 6),
+        allowNull: false
     },
+    long: {
+        type: Sequelize.FLOAT(10, 6),
+        allowNull: false
+    },
+    photo: Sequelize.STRING(500),
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
 };
