@@ -4,7 +4,9 @@ import Hapi from 'hapi';
 import Schema from './schema';
 import {graphqlHapi, graphiqlHapi} from 'apollo-server-hapi';
 import { formatError } from "apollo-errors";
-
+import HapiAuth from 'hapi-auth-basic';
+import users from './src/db/auth';
+import Bcrypt from 'bcrypt';
 
   
 
@@ -45,15 +47,39 @@ async function registerRoutes(server){
     server.route({
         method: 'GET',
         path: '/',
+        options: {
+            auth: 'simple'
+        },
         handler: ()=> 'Running Server'
     });
     await registerGraphql();
 }
 
+async function auth(server){
+    await server.register(HapiAuth);
+    server.auth.strategy('simple', 'basic', { validate });
+}
+
+const validate = async (request, username, password) => {
+    const user = users[username];
+    if (!user) {
+        return { credentials: null, isValid: false };
+    }
+    
+    const isValid = await Bcrypt.compare(password, user.password);
+    const credentials = { id: user.id, name: user.name };
+
+    return { isValid, credentials };
+};
+
 async function start(server){
     try {
+        await auth(server);
         await registerRoutes(server);
         await server.start();
+        /*Bcrypt.hash('app@paquera@beach', 2, function(err, hash) {
+            console.log('hash',hash);
+          });*/
         console.log(`Servidor rodando em ${server.info.uri}`);
     }catch(error){
         console.error(error.message);
