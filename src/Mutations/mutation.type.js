@@ -1,28 +1,28 @@
 import {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLList,
-    GraphQLFloat,
-    GraphQLInt
+    GraphQLNonNull
 } from 'graphql';
 
-var Mutation = new GraphQLObjectType({
-    name: 'ArticleGraph Mutations',
-    description: 'These are the things we can change',
-    fields: () => ({
-      login: {
-        description: 'Login',
-        args: {
-          email: { descripton:'email unico do usuario',type: GraphQLString}
-        },
-        resolve: (args) => AuthResolver.login(args)
-      },
-      register: {
-        description: 'Registrar usuario',
-        args: {
-          id: { type: new GraphQLNonNull(GraphQLInt) }
-        },
-        resolve: (args) => AuthResolver.login(args)
+import AuthResolver from './Resolvers/auth.type';
+
+import User from './../Queries/types/user.type';
+
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'API para criar, editar e deletar objetos',
+    fields: () => {
+      return{
+        login: {
+          type:User,
+          args: {
+            email: {type: new GraphQLNonNull(GraphQLString)},
+            password: {type: new GraphQLNonNull(GraphQLString)}
+          },
+          resolve: async (_,args) => AuthResolver.login(args)
+        }
       }
-    }),
+    },
   });
+
+  export default Mutation;

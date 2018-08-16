@@ -12,7 +12,7 @@ const graphObj = new GraphQLObjectType({
     description:"Objeto de usuarios cadastrar no sistema",
     fields: {
         id: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: new GraphQLNonNull(GraphQLInt),
             description:'id do usuario'
         },
         name: {
@@ -28,15 +28,15 @@ const graphObj = new GraphQLObjectType({
             description: 'Senha do usuario'
         },
         lat: {
-            type: new GraphQLNonNull(GraphQLFloat),
+            type:GraphQLFloat,
             description: 'Latitude do usuario'
         },
-        long: {
-            type: new GraphQLNonNull(GraphQLFloat),
+        lon: {
+            type:GraphQLFloat,
             description: 'Longitude do usuario'
         },
         photo: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description: 'Foto do usuario'
         }
     }

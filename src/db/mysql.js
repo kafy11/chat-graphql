@@ -5,7 +5,7 @@ import users from './models/users';
 const Conn = new Sequelize(
     'beach_paquera',
     'root',
-    'root',
+    '',
     {
       dialect: 'mysql',
       host: 'localhost',
@@ -17,9 +17,7 @@ const Conn = new Sequelize(
         min: 0,
         idle: 10000
       }*/
-      dialectOptions: {
-        socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
-      },
+      
     }
   );
 

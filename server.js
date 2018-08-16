@@ -3,6 +3,10 @@
 import Hapi from 'hapi';
 import Schema from './schema';
 import {graphqlHapi, graphiqlHapi} from 'apollo-server-hapi';
+import { formatError } from "apollo-errors";
+
+
+  
 
 const server = Hapi.server({
     host:'localhost',
@@ -28,7 +32,7 @@ async function registerGraphql(){
             path:'/debug',
             graphiqlOptions: {
                 endpointURL: '/graph',
-                formatError: (error) => ({message: error.message, location:error.location, stack:error.stack}),
+                formatError: (error) => ({key:error.key,message: error.message, location:error.location, stack:error.stack}),
                 debug: true
             }
         }

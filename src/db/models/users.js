@@ -25,11 +25,11 @@ const schema = {
     },
     lat: {
         type: Sequelize.FLOAT(10, 6),
-        allowNull: false
+        allowNull: true
     },
-    long: {
+    lon: {
         type: Sequelize.FLOAT(10, 6),
-        allowNull: false
+        allowNull: true
     },
     photo: Sequelize.STRING(500),
     createdAt: Sequelize.DATE,
