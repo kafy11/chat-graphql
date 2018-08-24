@@ -17,6 +17,7 @@ const schema = {
         allowNull: false
     },
     email: {
+        unique: true,
         type: Sequelize.STRING,
         allowNull: false,
         validate: {

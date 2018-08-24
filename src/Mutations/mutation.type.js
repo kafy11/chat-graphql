@@ -20,7 +20,18 @@ const Mutation = new GraphQLObjectType({
             password: {type: new GraphQLNonNull(GraphQLString)}
           },
           resolve: async (_,args) => AuthResolver.login(args)
+        },
+
+        register: {
+          type:User,
+          args: {
+            name: {type: new GraphQLNonNull(GraphQLString)},
+            email: {type: new GraphQLNonNull(GraphQLString)},
+            password: {type: new GraphQLNonNull(GraphQLString)}
+          },
+          resolve: async (_,args) => AuthResolver.register(args)
         }
+        
       }
     },
   });
