@@ -1,10 +1,13 @@
 import {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLFloat,
+    GraphQLInt
 } from 'graphql';
 
 import AuthResolver from './Resolvers/auth.type';
+import UserResolver from './Resolvers/user.type';
 
 import User from './../Queries/types/user.type';
 
@@ -30,7 +33,16 @@ const Mutation = new GraphQLObjectType({
             password: {type: new GraphQLNonNull(GraphQLString)}
           },
           resolve: async (_,args) => AuthResolver.register(args)
-        }
+        },
+
+        edit: {
+          type:User,
+          args: {
+            id: {type: new GraphQLNonNull(GraphQLInt)},
+            name: {type: GraphQLString}
+          },
+          resolve: async (_,args) => UserResolver.edit(args)
+        },
         
       }
     },

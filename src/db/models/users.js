@@ -24,6 +24,14 @@ const schema = {
             isEmail: true
         }
     },
+    age: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    bio: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     lat: {
         type: Sequelize.FLOAT(10, 6),
         allowNull: true
