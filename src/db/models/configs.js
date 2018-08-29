@@ -8,8 +8,15 @@ const schema = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    interest: {
+        type: Sequelize.STRING
+    },
+    age_from: {
+        type: Sequelize.INTEGER
+    },
+    age_to: {
+        type: Sequelize.INTEGER
+    }
 };
 
 export default schema;

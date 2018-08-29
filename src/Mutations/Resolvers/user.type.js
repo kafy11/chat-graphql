@@ -1,4 +1,4 @@
-import {User, Gender} from '../../db/mysql';
+import {User, Config} from '../../db/mysql';
 
 const fetch = {
     edit: async function (args){
@@ -16,8 +16,13 @@ const fetch = {
     }, 
 
     interest: async function (args){
-        const gender = Gender.find({where:args.id});
-        return user.setGender(gender);
+        User.findById(args.id).then(user=>{
+            Config.find({where: {userID: user.id}}).then(config=>{
+                config.update({
+                    interest: args.gender,
+                })
+            })
+        });
     }
 }
 

@@ -24,6 +24,9 @@ const schema = {
             isEmail: true
         }
     },
+    gender: {
+        type: Sequelize.STRING,
+    },
     age: {
         type: Sequelize.STRING,
         allowNull: true,

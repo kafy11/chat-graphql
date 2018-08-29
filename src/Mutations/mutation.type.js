@@ -10,7 +10,6 @@ import AuthResolver from './Resolvers/auth.type';
 import UserResolver from './Resolvers/user.type';
 
 import User from './../Queries/types/user.type';
-import Gender from './../Queries/types/gender.type';
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -51,7 +50,7 @@ const Mutation = new GraphQLObjectType({
           type:User,
           args: {
             id: {type: new GraphQLNonNull(GraphQLInt)},
-            genderId: {type: new GraphQLNonNull(GraphQLInt)},
+            gender: {type: new GraphQLNonNull(GraphQLString)},
           },
           resolve: async (_,args) => UserResolver.interest(args)
         },
