@@ -8,10 +8,16 @@ const schema = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    userId: {
+    user_id: {
         type: Sequelize.INTEGER,
         allowNull: false
-    }
+    },
+    token: {
+        type: Sequelize.CHAR(32),
+        allowNull: false
+    },
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
 };
 
 export default schema;

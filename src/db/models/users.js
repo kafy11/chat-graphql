@@ -26,7 +26,7 @@ const schema = {
     },
     age: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     bio: {
         type: Sequelize.STRING,

@@ -8,7 +8,11 @@ const schema = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    type: {
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    genderID: {
         type: Sequelize.INTEGER,
         allowNull: false
     }

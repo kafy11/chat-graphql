@@ -8,8 +8,8 @@ const schema = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    userId: {
-        type: Sequelize.INTEGER,
+    type: {
+        type: Sequelize.STRING,
         allowNull: false
     }
 };
