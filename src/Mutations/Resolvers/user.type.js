@@ -2,16 +2,17 @@ import {User, Config} from '../../db/mysql';
 
 const fetch = {
     edit: async function (args){
-        User.update(
+        return User.update(
             {
                 name: args.name,
                 age: args.age,
                 bio: args.bio,
+                gender: args.gender,
             },
             {where: {id: args.id}},
             {fields: args.name},
-          ).then(() => {
-            return 'sucesso';
+          ).then(user=>{
+            console.log(user)
           })
     }, 
 
@@ -23,7 +24,7 @@ const fetch = {
                 })
             })
         });
-    }
+    },
 }
 
 export default fetch;
