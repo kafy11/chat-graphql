@@ -1,7 +1,5 @@
 import {User, Config} from '../../db/mysql';
-// import models from '../../db/';
 import {WrongPasswordError} from '../errorHandler';
-import Bcrypt from 'bcrypt';
 
 const fetch = {
     login: async function (args){
@@ -19,8 +17,7 @@ const fetch = {
 
     register: async function (args){
         const new_user = args;
-        new_user.password = await Bcrypt.hash(new_user.password, 12);
-        return User.create(new_user).then(user =>{
+        User.create(new_user).then(user =>{
             Config.create().then(config => {
                 user.setConfig(config);
             })
