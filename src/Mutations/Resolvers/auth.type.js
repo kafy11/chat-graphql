@@ -1,7 +1,5 @@
 import {User, Config} from '../../db/mysql';
-// import models from '../../db/';
 import {WrongPasswordError} from '../errorHandler';
-import Bcrypt from 'bcrypt';
 
 const fetch = {
     login: async function (args){

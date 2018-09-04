@@ -35,6 +35,15 @@ const Query = new GraphQLObjectType({
             },
             type: new GraphQLList(UserType),
             resolve: (root, args) => UserLoader.login(args)
+        },
+
+        feed: {
+            description: 'Feed do usuario',
+            args: {
+                id: {descripton:'id do usuario logado',type: GraphQLInt},
+            },
+            type: new GraphQLList(UserType),
+            resolve: (_, args) => UserLoader.feed(args)
         }
     })
 });

@@ -28,7 +28,7 @@ const schema = {
         type: Sequelize.STRING,
     },
     age: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: true,
     },
     bio: {
