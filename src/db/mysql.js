@@ -11,14 +11,14 @@ import configs from './models/configs';
 const Conn = new Sequelize(
     'beach_paquera',
     'root',
-    'root',
+    '',
     {
       dialect: 'mysql',
       host: 'localhost',
       port: 3306,
 
       dialectOptions: {
-        socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
+        //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
       },
 
       /*pool: {
