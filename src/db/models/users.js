@@ -35,17 +35,17 @@ const schema = {
         type: Sequelize.STRING,
         allowNull: true,
     },
-    lat: {
-        type: Sequelize.FLOAT(10, 6),
+    location: {
+        type: Sequelize.GEOMETRY('POINT'),
         allowNull: true
     },
-    lon: {
-        type: Sequelize.FLOAT(10, 6),
-        allowNull: true
+    distance: {
+        type: Sequelize.DOUBLE(),
+        allowNull:true,
     },
     photo: Sequelize.STRING(500),
     createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE
 };
 
 export default schema;

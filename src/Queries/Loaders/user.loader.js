@@ -1,5 +1,7 @@
 import {User, Config} from '../../db/mysql';
 
+import sequelize from 'sequelize';
+
 const fetch = {
     fetchAll: async function (args, res){
         const filter = {};
@@ -23,9 +25,20 @@ const fetch = {
                     }]
                 }
             ).then(users => {
-                console.log(users)
+                return users;
             })
         })
+    },
+
+    flirtList: async function (args,res){
+        const location = sequelize.literal(`ST_GeomFromText('POINT(${args.lat} ${args.long})', 4326)`);
+        
+        return await User.findAll({
+            attributes: {include: [[sequelize.fn('ST_Distance', sequelize.literal('location'), location),'distance']] },
+            order: [sequelize.col('distance')],
+            limit: 10,
+            where: {id:{[sequelize.Op.ne]:args.id}}
+          });
     }
 }
 

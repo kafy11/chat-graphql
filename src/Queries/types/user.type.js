@@ -7,6 +7,22 @@ import {
     GraphQLList
 } from 'graphql';
 
+const GeoLocation = new GraphQLObjectType({
+    name:"user_geolocation",
+    description:"Geolocalizacao do usuário",
+    fields: {
+        type: {
+            type: GraphQLString,
+            description:"Tipo da Geolizacao, deve ser sempre (Point)"
+        },
+        coordinates: {
+            type: GraphQLList(GraphQLFloat),
+            description: "Latitude e Longitude"
+        }
+    }
+});
+
+
 const graphObj = new GraphQLObjectType({
     name:"usuarios",
     description:"Objeto de usuarios cadastrar no sistema",
@@ -27,17 +43,17 @@ const graphObj = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
             description: 'Senha do usuario'
         },
-        lat: {
-            type:GraphQLFloat,
-            description: 'Latitude do usuario'
-        },
-        lon: {
-            type:GraphQLFloat,
-            description: 'Longitude do usuario'
+        location: {
+            type:GeoLocation,
+            description:"Latitude e longitude do usuário"
         },
         photo: {
             type: GraphQLString,
             description: 'Foto do usuario'
+        },
+        distance: {
+            type: GraphQLFloat,
+            description: 'distância com relação ao usuário logado'
         }
     }
 });

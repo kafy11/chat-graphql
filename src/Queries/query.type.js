@@ -20,8 +20,6 @@ const Query = new GraphQLObjectType({
                 name: {descripton:'nome do usuario',type: GraphQLString},
                 password: {descripton:'senha do usuario',type: GraphQLString},
                 email: {descripton:'email do usuario',type: GraphQLString},
-                lat: {descripton:'latitude do usuario',type: GraphQLFloat},
-                long: {descripton:'longitude do usuario',type: GraphQLFloat},
                 photo: {description: 'foto do usuario', type: GraphQLString}
             },
             type: new GraphQLList(UserType),
@@ -44,6 +42,16 @@ const Query = new GraphQLObjectType({
             },
             type: new GraphQLList(UserType),
             resolve: (_, args) => UserLoader.feed(args)
+        },
+        flirtList: {
+            description: 'Lista usuário próximos por geolocalização',
+            args: {
+                id: {descripton:'id do usuario logado',type: GraphQLInt},
+                lat: {descripton:'Latitude do usuario logado',type: GraphQLFloat},
+                long: {descripton:'Longitude do usuario logado',type: GraphQLFloat},
+            },
+            type: new GraphQLList(UserType),
+            resolve: (root, args) => UserLoader.flirtList(args)
         }
     })
 });

@@ -32,8 +32,12 @@ const Conn = new Sequelize(
   );
 
   
-
-const User = Conn.define('users',users);
+const UserIndexes = {
+  indexes: [
+    {fields: ["location"],"name":"geo index"}
+  ]
+};
+const User = Conn.define('users',users,UserIndexes);
 const Config = Conn.define('configs', configs);
 const Like = Conn.define('likes', likes);
 const Conversation = Conn.define('conversations', conversations);
