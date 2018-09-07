@@ -25,16 +25,6 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(UserType),
             resolve: (root,args) => UserLoader.fetchAll(args)
         },
-        login: {
-            description: 'Login do usuario',
-            args: {
-                email: {descripton:'nome do usuario',type: GraphQLString},
-                password: {descripton:'senha do usuario',type: GraphQLString},
-            },
-            type: new GraphQLList(UserType),
-            resolve: (root, args) => UserLoader.login(args)
-        },
-
         feed: {
             description: 'Feed do usuario',
             args: {

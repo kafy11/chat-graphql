@@ -6,10 +6,12 @@ import {
     GraphQLInt,
 } from 'graphql';
 
-import AuthResolver from './Resolvers/auth.type';
-import UserResolver from './Resolvers/user.type';
+import AuthResolver from './Resolvers/auth.resolver';
+import UserResolver from './Resolvers/user.resolver';
+import LikeResolver from './Resolvers/like.resolver';
 
 import User from './../Queries/types/user.type';
+import Like from '../Queries/types/like.type';
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -55,7 +57,16 @@ const Mutation = new GraphQLObjectType({
           },
           resolve: async (_,args) => UserResolver.interest(args)
         },
-        
+
+        userInteraction: {
+          type: Like,
+          args: {
+            user_id: {type: new GraphQLNonNull(GraphQLInt)},
+            user_liked_id: {type: new GraphQLNonNull(GraphQLInt)},
+            type: {type: new GraphQLNonNull(GraphQLString)}
+          },
+          resolve: async (root,args) => LikeResolver.interaction(args)
+        }
       }
     },
   });
