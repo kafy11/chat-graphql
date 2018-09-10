@@ -28,7 +28,11 @@ const Query = new GraphQLObjectType({
         feed: {
             description: 'Feed do usuario',
             args: {
-                id: {descripton:'id do usuario logado',type: GraphQLInt},
+                id: {descripton:'Id do usuario logado',type: GraphQLInt},
+                limit: {descripton:'Usuarios por pagina',type: GraphQLInt},
+                offset: {descripton:'Pagina a ser exibida',type: GraphQLInt},
+                lat: {descripton:'Latitude do usuario logado',type: GraphQLFloat},
+                long: {descripton:'Longitude do usuario logado',type: GraphQLFloat}
             },
             type: new GraphQLList(UserType),
             resolve: (_, args) => UserLoader.feed(args)

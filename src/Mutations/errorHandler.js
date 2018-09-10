@@ -12,9 +12,14 @@ const CantCreate = createError('CantCreate',{
     message: 'Houve algum erro criar a interação'
 })
 
+const WrongCredentials = createError('WrongCredentials', {
+    message: 'Credenciais incorretas'
+})
+
 export 
 { 
     WrongPasswordError ,
+    WrongCredentials,
     EmailExist,
     CantCreate
 }

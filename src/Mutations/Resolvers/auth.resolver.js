@@ -1,5 +1,5 @@
 import {User, Config} from '../../db/mysql';
-import {WrongPasswordError,EmailExist} from '../errorHandler';
+import {WrongPasswordError, WrongCredentials, EmailExist} from '../errorHandler';
 
 const fetch = {
     login: async function (args){
@@ -13,6 +13,8 @@ const fetch = {
             {
                 throw new WrongPasswordError();
             }    
+        }else{
+            throw new WrongCredentials();
         }
     },
 

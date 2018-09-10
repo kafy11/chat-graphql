@@ -18,7 +18,7 @@ const Conn = new Sequelize(
       port: 3306,
 
       dialectOptions: {
-        //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
+        // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
       },
 
       /*pool: {

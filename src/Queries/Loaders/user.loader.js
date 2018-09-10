@@ -10,42 +10,44 @@ const fetch = {
     },
 
     feed: async function (args){
-        User.findById(args.id, {
+        return await User.findById(args.id, {
             include: [{
                 model: Config,
             }]
         }).then(user=>{
-            // console.log(user.location.coordinates[0])
-            // const location = sequelize.literal(`ST_GeomFromText('POINT(${user.location.coordinates[0]} ${user.location.coordinates[1]})', 4326)`);
-            // console.log(location)
-            User.findAll({
-                // attributes: {include: [[sequelize.fn('ST_Distance', sequelize.literal('location'), location),'distance']] },
-                // order: [sequelize.col('distance')],
-                // limit: 10,
+            const location = sequelize.literal(`ST_GeomFromText('POINT(${user.location.coordinates[0]} ${user.location.coordinates[1]})', 4326)`);
+            return User.findAll({
+                attributes: {include: [[sequelize.fn('ST_Distance', sequelize.literal('location'), location),'distance']] },
+                order: [sequelize.col('distance')],
+                limit: args.limit,
+                offset: args.offset,
+                where: {
+                    $and: [
+                        {id:{[sequelize.Op.ne]:args.id}},
+                        sequelize.where(sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('age'), sequelize.fn('now')), {[sequelize.Op.between]: [6, 50]})
+                    ],
+                },
                 include:[
                     {
-                        model: Config, 
+                        model: Config,
                         where: {
                             interest: user.config.interest
                         }
                     }],
                 }
-            ).then(users => {
-                console.log(users)
-                return users;
-            })
+            )
         })
     },
 
     flirtList: async function (args,res){
         const location = sequelize.literal(`ST_GeomFromText('POINT(${args.lat} ${args.long})', 4326)`);
-        
-        return await User.findAll({
+
+        return User.findAll({
             attributes: {include: [[sequelize.fn('ST_Distance', sequelize.literal('location'), location),'distance']] },
             order: [sequelize.col('distance')],
             limit: 10,
             where: {id:{[sequelize.Op.ne]:args.id}}
-          });
+          })
     }
 }
 
