@@ -15,16 +15,23 @@ const fetch = {
                 model: Config,
             }]
         }).then(user=>{
+            // console.log(user.location.coordinates[0])
+            // const location = sequelize.literal(`ST_GeomFromText('POINT(${user.location.coordinates[0]} ${user.location.coordinates[1]})', 4326)`);
+            // console.log(location)
             User.findAll({
+                // attributes: {include: [[sequelize.fn('ST_Distance', sequelize.literal('location'), location),'distance']] },
+                // order: [sequelize.col('distance')],
+                // limit: 10,
                 include:[
                     {
                         model: Config, 
                         where: {
                             interest: user.config.interest
                         }
-                    }]
+                    }],
                 }
             ).then(users => {
+                console.log(users)
                 return users;
             })
         })

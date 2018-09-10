@@ -49,6 +49,17 @@ const Mutation = new GraphQLObjectType({
           resolve: async (_,args) => UserResolver.edit(args)
         },
 
+        config: {
+          type:User,
+          args: {
+            id: {type: new GraphQLNonNull(GraphQLInt)},
+            interest: {type: GraphQLString},
+            age_from: {type: GraphQLInt},
+            age_to: {type: GraphQLInt},
+          },
+          resolve: async (_,args) => UserResolver.config(args)
+        },
+
         interest: {
           type:User,
           args: {

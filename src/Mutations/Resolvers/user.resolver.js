@@ -14,7 +14,21 @@ const fetch = {
           ).then(user=>{
             console.log(user)
           })
-    }, 
+    },
+
+    config: async function (args){
+        Config.update(
+            {
+                interest: args.interest,
+                age_from: args.age_from,
+                age_to: args.age_to,
+            },
+            {where: {userID: args.id}}
+        ).then(user=>{
+            console.log(user)
+            return user;
+        })
+    },
 
     interest: async function (args){
         User.findById(args.id).then(user=>{
