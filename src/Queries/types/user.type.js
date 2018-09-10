@@ -51,6 +51,14 @@ const graphObj = new GraphQLObjectType({
             type: GraphQLString,
             description: 'Foto do usuario'
         },
+        gender: {
+            type: GraphQLString,
+            description: 'Sexo do usuário'
+        },
+        bio: {
+            type: GraphQLString,
+            description: 'Descrição do perfil'
+        },
         distance: {
             type: GraphQLFloat,
             description: 'distância com relação ao usuário logado'

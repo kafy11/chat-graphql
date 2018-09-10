@@ -18,9 +18,7 @@ const Query = new GraphQLObjectType({
             args: {
                 id: {descripton:'ID unico do usuario',type: GraphQLInt},
                 name: {descripton:'nome do usuario',type: GraphQLString},
-                password: {descripton:'senha do usuario',type: GraphQLString},
                 email: {descripton:'email do usuario',type: GraphQLString},
-                photo: {description: 'foto do usuario', type: GraphQLString}
             },
             type: new GraphQLList(UserType),
             resolve: (root,args) => UserLoader.fetchAll(args)

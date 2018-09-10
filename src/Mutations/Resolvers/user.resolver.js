@@ -2,18 +2,23 @@ import {User, Config} from '../../db/mysql';
 
 const fetch = {
     edit: async function (args){
+        let filter = {};
+        let id = args.id;
+        args.id = undefined;
+        for(let f in args){
+            if(args[f] != undefined){
+                filter[f] = args[f];
+            }
+        }
+
         return User.update(
-            {
-                name: args.name,
-                age: args.age,
-                bio: args.bio,
-                gender: args.gender,
-            },
-            {where: {id: args.id}},
-            {fields: args.name},
-          ).then(user=>{
-            console.log(user)
-          })
+            filter,
+            {where: {id: id}}
+          ).then(result=>{
+             return User.findById(id);
+          });
+          
+
     },
 
     config: async function (args){
@@ -24,10 +29,7 @@ const fetch = {
                 age_to: args.age_to,
             },
             {where: {userID: args.id}}
-        ).then(user=>{
-            console.log(user)
-            return user;
-        })
+        );
     },
 
     interest: async function (args){

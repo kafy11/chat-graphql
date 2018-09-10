@@ -4,9 +4,14 @@ import sequelize from 'sequelize';
 
 const fetch = {
     fetchAll: async function (args, res){
-        const filter = {};
+        let filter = {};
+        for(let f in args){
+            if(args[f] != undefined){
+                filter[f] = args[f];
+            }
+        }
         
-        return User.findAll({where:args});
+        return User.findAll({where:filter});
     },
 
     feed: async function (args){
