@@ -46,6 +46,7 @@ const Mutation = new GraphQLObjectType({
             age: {type: GraphQLString},
             bio: {type: GraphQLString},
             gender: {type: GraphQLString},
+            visible: {type: GraphQLInt},
           },
           resolve: async (_,args) => UserResolver.edit(args)
         },

@@ -62,6 +62,10 @@ const graphObj = new GraphQLObjectType({
         distance: {
             type: GraphQLFloat,
             description: 'distância com relação ao usuário logado'
+        },
+        visible: {
+            type: GraphQLInt,
+            description: 'Definir se o perfil do usuário está publico'
         }
     }
 });

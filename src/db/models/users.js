@@ -43,6 +43,10 @@ const schema = {
         type: Sequelize.DOUBLE(),
         allowNull:true,
     },
+    visible: {
+        type: Sequelize.INTEGER,
+        defaultValue:1
+    },
     photo: Sequelize.STRING(500),
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
