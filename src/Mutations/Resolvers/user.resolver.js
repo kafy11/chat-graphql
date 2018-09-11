@@ -22,14 +22,20 @@ const fetch = {
     },
 
     config: async function (args){
-        Config.update(
-            {
-                interest: args.interest,
-                age_from: args.age_from,
-                age_to: args.age_to,
-            },
-            {where: {userID: args.id}}
-        );
+        let filter = {};
+        let id = args.id;
+        args.id = undefined;
+        for(let f in args){
+            if(args[f] != undefined){
+                filter[f] = args[f];
+            }
+        }
+        return Config.update(
+            filter,
+            {where: {userId:id}}
+        ).then(result=>{
+            return Config.find({where:{userId:id}});
+        });
     },
 
     interest: async function (args){

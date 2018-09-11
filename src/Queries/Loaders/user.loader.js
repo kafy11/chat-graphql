@@ -53,6 +53,13 @@ const fetch = {
             limit: 10,
             where: {id:{[sequelize.Op.ne]:args.id}}
           })
+    },
+
+    config: async function(args,res){
+        return Config.findAll({
+            where: {userId:args.id},
+            limit: 1
+        });
     }
 }
 

@@ -11,6 +11,7 @@ import UserResolver from './Resolvers/user.resolver';
 import LikeResolver from './Resolvers/like.resolver';
 
 import User from './../Queries/types/user.type';
+import UserConfig from './../Queries/types/userConfig.type';
 import Like from '../Queries/types/like.type';
 
 const Mutation = new GraphQLObjectType({
@@ -50,7 +51,7 @@ const Mutation = new GraphQLObjectType({
         },
 
         config: {
-          type:User,
+          type:UserConfig,
           args: {
             id: {type: new GraphQLNonNull(GraphQLInt)},
             interest: {type: GraphQLString},
