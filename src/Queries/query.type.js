@@ -1,3 +1,4 @@
+import UserConfigType from './types/userConfig.type';
 import UserType from './types/user.type';
 import MessageType from './types/message.type';
 import UserLoader from './Loaders/user.loader';
@@ -54,6 +55,14 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(MessageType),
             resolve: (_, args) => UserLoader.conversations(args)
         },
+        userConfig: {
+            description: 'Configuração de um usuario',
+            args: {
+                id: {descripton:'id do usuario',type: GraphQLInt}
+            },
+            type: new GraphQLList(UserConfigType),
+            resolve: (root, args) => UserLoader.config(args)
+        }
     })
 });
 

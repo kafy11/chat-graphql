@@ -3,7 +3,7 @@ import Conn, {User, Config} from './mysql';
 Conn.sync({force: true}).then(()=>{
     let user1 = {
         name:"Vinicius Rangel",
-        "email":"vinicius@agenciap4.com",
+        "email":"vinicius@agencia4p.com",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
         "age":"2000-10-20",
@@ -18,7 +18,7 @@ Conn.sync({force: true}).then(()=>{
 
     let user2 = {
         name:"Thales Gazaneo",
-        "email":"thales@agenciap4.com",
+        "email":"thales@agencia4p.com",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
         "age":"1969-10-20",
@@ -32,7 +32,7 @@ Conn.sync({force: true}).then(()=>{
 
     let user3 = {
         name:"Wiatan Champz",
-        "email":"wiatan@agenciap4.com",
+        "email":"wiatan@agencia4p.com",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
         "age":"1989-10-20",

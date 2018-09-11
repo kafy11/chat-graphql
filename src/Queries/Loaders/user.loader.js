@@ -13,7 +13,7 @@ const fetch = {
         
         return User.findAll({where:filter});
     },
-
+    
     feed: async function (args){
         return await User.findById(args.id, {
             include: [{
@@ -43,24 +43,31 @@ const fetch = {
             )
         })
     },
-
+    
     flirtList: async function (args,res){
         const location = sequelize.literal(`ST_GeomFromText('POINT(${args.lat} ${args.long})', 4326)`);
-
+        
         return User.findAll({
             attributes: {include: [[sequelize.fn('ST_Distance', sequelize.literal('location'), location),'distance']] },
             order: [sequelize.col('distance')],
             limit: 10,
             where: {id:{[sequelize.Op.ne]:args.id}}
-          })
+        })
     },
-
+    
     conversations: async function (args){
         return await Conversation.findAll({
             where: {
                 userID: args.id,
             }
         })
+    },
+    
+    config: async function(args,res){
+        return Config.findAll({
+            where: {userId:args.id},
+            limit: 1
+        });
     }
 }
 

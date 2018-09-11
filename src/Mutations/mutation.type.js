@@ -12,6 +12,7 @@ import LikeResolver from './Resolvers/like.resolver';
 import MessageResolver from './Resolvers/message.resolver';
 
 import User from './../Queries/types/user.type';
+import UserConfig from './../Queries/types/userConfig.type';
 import Like from '../Queries/types/like.type';
 import Message from '../Queries/types/message.type';
 
@@ -47,12 +48,13 @@ const Mutation = new GraphQLObjectType({
           age: {type: GraphQLString},
           bio: {type: GraphQLString},
           gender: {type: GraphQLString},
+          visible: {type: GraphQLInt},
         },
         resolve: async (_,args) => UserResolver.edit(args)
       },
       
       config: {
-        type:User,
+        type:UserConfig,
         args: {
           id: {type: new GraphQLNonNull(GraphQLInt)},
           interest: {type: GraphQLString},
