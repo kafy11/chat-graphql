@@ -11,7 +11,14 @@ const fetch = {
             }
         }
         
-        return User.findAll({where:filter});
+        return User.findAll({
+            attributes: {
+                include:[
+                    [sequelize.fn('timestampdiff', sequelize.literal('YEAR'), sequelize.col('date_birthday'), sequelize.fn('NOW')),'age']
+                ]
+            },
+            where:filter
+        });
     },
 
     feed: async function (args){
@@ -29,7 +36,7 @@ const fetch = {
                 where: {
                     $and: [
                         {id:{[sequelize.Op.ne]:args.id}},
-                        sequelize.where(sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('age'), sequelize.fn('now')), {[sequelize.Op.between]: [6, 50]})
+                        //sequelize.where(sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('age'), sequelize.fn('now')), {[sequelize.Op.between]: [6, 50]})
                     ],
                 },
                 include:[

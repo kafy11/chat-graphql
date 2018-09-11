@@ -6,7 +6,7 @@ Conn.sync({force: true}).then(()=>{
         "email":"vinicius@agencia4p.com",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
-        "age":"2000-10-20",
+        "date_birthday":"1993-05-14",
         location: {type:'Point',coordinates:['-23.539675','-46.578920']}
      };
     //4pixels
@@ -21,7 +21,7 @@ Conn.sync({force: true}).then(()=>{
         "email":"thales@agencia4p.com",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
-        "age":"1969-10-20",
+        "date_birthday":"1969-10-20",
         location: {type:'Point',coordinates:['-23.565960','-46.505224']} };
     //telha norte aricanduva
     User.create(user2).then(user =>{
@@ -35,7 +35,7 @@ Conn.sync({force: true}).then(()=>{
         "email":"wiatan@agencia4p.com",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
-        "age":"1989-10-20",
+        "date_birthday":"1989-10-20",
         location: {type:'Point',coordinates:['-23.676247','-46.676739']} };
     //shopping interlagos
     User.create(user3).then(user =>{
@@ -49,7 +49,7 @@ Conn.sync({force: true}).then(()=>{
         "email":"maroni@bahamas.com.br",
         "password":"e10adc3949ba59abbe56e057f20f883e",
         "gender":"M",
-        "age":"1999-10-20",
+        "date_birthday":"1999-10-20",
         location: {type:'Point',coordinates:['-23.604857','-46.664786']} };
     //bahamas
     User.create(user4).then(user =>{

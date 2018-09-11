@@ -4,7 +4,7 @@ import {
     GraphQLString,
     GraphQLInt,
     GraphQLFloat,
-    GraphQLList
+    GraphQLList,
 } from 'graphql';
 
 const GeoLocation = new GraphQLObjectType({
@@ -66,6 +66,14 @@ const graphObj = new GraphQLObjectType({
         visible: {
             type: GraphQLInt,
             description: 'Definir se o perfil do usuário está publico'
+        },
+        date_birthday: {
+            type: GraphQLString,
+            description:'Data de nascimento do usuário'
+        },
+        age: {
+            type: GraphQLInt,
+            description:'Idade do usuário'
         }
     }
 });
