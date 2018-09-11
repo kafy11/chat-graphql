@@ -8,7 +8,8 @@ import {
     GraphQLString,
     GraphQLList,
     GraphQLFloat,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLNonNull
 } from 'graphql';
 
 const Query = new GraphQLObjectType({
@@ -31,8 +32,8 @@ const Query = new GraphQLObjectType({
                 id: {descripton:'Id do usuario logado',type: GraphQLInt},
                 limit: {descripton:'Usuarios por pagina',type: GraphQLInt},
                 offset: {descripton:'Pagina a ser exibida',type: GraphQLInt},
-                lat: {descripton:'Latitude do usuario logado',type: GraphQLFloat},
-                long: {descripton:'Longitude do usuario logado',type: GraphQLFloat}
+                lat: {descripton:'Latitude do usuario logado',type: new GraphQLNonNull(GraphQLFloat)},
+                long: {descripton:'Longitude do usuario logado',type: new GraphQLNonNull(GraphQLFloat)}
             },
             type: new GraphQLList(UserType),
             resolve: (_, args) => UserLoader.feed(args)
