@@ -41,9 +41,11 @@ const User = Conn.define('users',users,UserIndexes);
 const Config = Conn.define('configs', configs);
 const Like = Conn.define('likes', likes);
 const Conversation = Conn.define('conversations', conversations);
+const Messege = Conn.define('messeges', messeges);
 
 User.hasOne(Config);
-User.hasMany(Conversation);
+User.belongsToMany(User, {through: Conversation, as: 'user2'});
+Conversation.hasMany(Messege);
 
 export {User, Config, Conversation, Like};
 export default Conn;

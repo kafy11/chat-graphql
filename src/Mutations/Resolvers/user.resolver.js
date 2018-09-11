@@ -1,4 +1,4 @@
-import {User, Config} from '../../db/mysql';
+import {User, Config, Conversation, Messege} from '../../db/mysql';
 
 const fetch = {
     edit: async function (args){
@@ -17,7 +17,6 @@ const fetch = {
           ).then(result=>{
              return User.findById(id);
           });
-          
 
     },
 

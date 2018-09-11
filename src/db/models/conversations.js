@@ -8,10 +8,6 @@ const schema = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    }
 };
 
 export default schema;
