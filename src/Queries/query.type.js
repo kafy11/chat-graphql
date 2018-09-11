@@ -1,4 +1,5 @@
 import UserType from './types/user.type';
+import MessageType from './types/message.type';
 import UserLoader from './Loaders/user.loader';
 
 import {
@@ -44,7 +45,15 @@ const Query = new GraphQLObjectType({
             },
             type: new GraphQLList(UserType),
             resolve: (root, args) => UserLoader.flirtList(args)
-        }
+        },
+        conversations: {
+            description: 'Conversas do usuario',
+            args: {
+                id: {descripton:'Id do usuario logado',type: GraphQLInt},
+            },
+            type: new GraphQLList(MessageType),
+            resolve: (_, args) => UserLoader.conversations(args)
+        },
     })
 });
 

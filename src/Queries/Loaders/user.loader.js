@@ -1,4 +1,4 @@
-import {User, Config} from '../../db/mysql';
+import {User, Config, Conversation} from '../../db/mysql';
 
 import sequelize from 'sequelize';
 
@@ -53,6 +53,14 @@ const fetch = {
             limit: 10,
             where: {id:{[sequelize.Op.ne]:args.id}}
           })
+    },
+
+    conversations: async function (args){
+        return await Conversation.findAll({
+            where: {
+                userID: args.id,
+            }
+        })
     }
 }
 
