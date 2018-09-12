@@ -1,4 +1,4 @@
-import {User, Config, Conversation, Messege} from '../../db/mysql';
+import {User, Config, Conversation, Message} from '../../db/mysql';
 
 const fetch = {
     edit: async function (args){

@@ -68,26 +68,27 @@ crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 <script>
     var socket = io('http://localhost:3000');
-    
+
     $('#chat').submit(function(e){
         e.preventDefault();
-        
+
         let author = $('input[name=author').val();
         let receiver = $('input[name=receiver').val();
         let message = $('input[name=message').val();
-        
+
         let messageObject = {
             author: author,
+            receiver: receiver,
             message: message
         };
 
         renderMessage(messageObject);
-        
+
         socket.emit('sendMessage', messageObject)
     })
 
     function renderMessage(message){
-        $('.messages').append('<div class="message">'+message.message+'</div>')
+        $('.messages').append('<div class="message">'+message.author+' :'+message.message+'</div>')
     }
 
     socket.on('previousMessages', function(messsages){
@@ -96,7 +97,8 @@ crossorigin="anonymous"></script>
         }
     })
 
-    socket.on('receivedMessages', function(message){
+    socket.on('receivedMessage', function(message){
+        console.log(message)
         renderMessage(message)
     })
 </script>

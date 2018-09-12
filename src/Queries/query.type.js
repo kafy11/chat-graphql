@@ -51,10 +51,20 @@ const Query = new GraphQLObjectType({
         conversations: {
             description: 'Conversas do usuario',
             args: {
-                id: {descripton:'Id do usuario logado',type: GraphQLInt},
+                id: {descripton:'Id da conversa',type: GraphQLInt},
+                name: {description: 'Nome do usuario da conversa', type: GraphQLString}
+            },
+            type: new GraphQLList(UserType),
+            resolve: (_, args) => UserLoader.conversations(args)
+        },
+        messages: {
+            description: 'Id da conversa',
+            args: {
+                id: {description: 'Id da conversa', type: GraphQLInt}
             },
             type: new GraphQLList(MessageType),
-            resolve: (_, args) => UserLoader.conversations(args)
+            resolve: (root, args) => UserLoader.mensagens(args),
+
         },
         userConfig: {
             description: 'Configuração de um usuario',

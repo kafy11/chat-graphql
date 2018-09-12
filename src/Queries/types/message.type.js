@@ -16,13 +16,21 @@ const graphObj = new GraphQLObjectType({
             description:'id da mensagem'
         },
         content: {
-            type: new GraphQLNonNull(GraphQLInt),
+            type: new GraphQLNonNull(GraphQLString),
             description:'conteudo da mensagem'
         },
         conversationId: {
             type: new GraphQLNonNull(GraphQLInt),
             description:'Id da conversa'
-        }
+        },
+        authorId: {
+            type: new GraphQLNonNull(GraphQLInt),
+            description:'id do autor da mensagem'
+        },
+        receiverId: {
+            type: new GraphQLNonNull(GraphQLInt),
+            description:'id do destinatario da mensagem'
+        },
     }
 });
 

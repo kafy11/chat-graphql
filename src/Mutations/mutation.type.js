@@ -83,14 +83,12 @@ const Mutation = new GraphQLObjectType({
         resolve: async (root,args) => LikeResolver.interaction(args)
       },
       
-      createMessage: {
+      startSocket: {
         type: Message,
         args:{
-          userId: {type: new GraphQLNonNull(GraphQLInt)},
-          user2Id: {type: new GraphQLNonNull(GraphQLInt)},
-          content: {type: new GraphQLNonNull(GraphQLString)},
+          id: {type: new GraphQLNonNull(GraphQLInt)},
         },
-        resolve: async (root,args) => MessageResolver.createMessage(args)
+        resolve: async (root,args) => MessageResolver.startSocket(args)
       }
     }
   },

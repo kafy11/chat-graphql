@@ -104,13 +104,16 @@ async function start(server){
 
 start(server);
 
-let messsages = [];
-io.on('connection', function(socket){
-    console.log(socket.id)
-    socket.emit('previousMessages', messsages);
+// let messsages = [];
+// io.on('connection', function(socket){
+//     console.log(socket.id)
+//     socket.emit('previousMessages', messsages);
 
-    socket.on('sendMessage', function(data){
-        messsages.push(data);
-        socket.broadcast.emit('receivedMessage', data);
-    })
-})
+//     socket.on('sendMessage', function(data){
+//         console.log(data)
+//         messsages.push(data);
+//         socket.broadcast.emit('receivedMessage', data);
+//     })
+// })
+
+export default io;
