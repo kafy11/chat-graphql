@@ -17,7 +17,7 @@ const graphObj = new GraphQLObjectType({
             description:'id da configuração do usuario'
         },
         interest: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
             description:'Interesse do usuário (Homem, Mulher ou Ambos)'
         },
         userId: {
