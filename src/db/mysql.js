@@ -18,7 +18,7 @@ const Conn = new Sequelize(
       port: 3306,
 
       dialectOptions: {
-        //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
+        // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
       },
 
       /*pool: {
@@ -41,7 +41,10 @@ const User = Conn.define('users',users,UserIndexes);
 const Config = Conn.define('configs', configs);
 const Like = Conn.define('likes', likes);
 const Conversation = Conn.define('conversations', conversations);
-const Message = Conn.define('messages', messages);
+const Message = Conn.define('messages', messages, {
+  charset: 'utf8mb4',
+  collate: 'utf8mb4_bin'
+});
 
 User.hasOne(Config);
 // User.belongsToMany(User, {through: Conversation, as: 'user2'});

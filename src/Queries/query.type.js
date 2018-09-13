@@ -2,6 +2,7 @@ import UserConfigType from './types/userConfig.type';
 import UserType from './types/user.type';
 import MessageType from './types/message.type';
 import UserLoader from './Loaders/user.loader';
+import ConversationLoader from './Loaders/conversation.loader';
 
 import {
     GraphQLObjectType,
@@ -55,7 +56,7 @@ const Query = new GraphQLObjectType({
                 name: {description: 'Nome do usuario da conversa', type: GraphQLString}
             },
             type: new GraphQLList(UserType),
-            resolve: (_, args) => UserLoader.conversations(args)
+            resolve: (_, args) => ConversationLoader.conversations(args)
         },
         messages: {
             description: 'Id da conversa',
@@ -63,7 +64,7 @@ const Query = new GraphQLObjectType({
                 id: {description: 'Id da conversa', type: GraphQLInt}
             },
             type: new GraphQLList(MessageType),
-            resolve: (root, args) => UserLoader.mensagens(args),
+            resolve: (root, args) => ConversationLoader.mensagens(args),
 
         },
         userConfig: {

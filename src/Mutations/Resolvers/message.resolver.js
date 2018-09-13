@@ -46,6 +46,12 @@ const result = {
                 })
             })
         })
+    },
+
+    deleteMessage: async function(args){
+        return Message.findById(args.id).then(message=>{
+            return message.destroy({force: true});
+        })
     }
 }
 
