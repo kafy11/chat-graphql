@@ -34,20 +34,13 @@ const fetch = {
                 limit: args.limit,
                 offset: args.offset,
                 where: {
+                    gender: user.config.interest,
                     $and: [
                         {id:{[sequelize.Op.ne]:args.id}},
                         //sequelize.where(sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('age'), sequelize.fn('now')), {[sequelize.Op.between]: [6, 50]})
                     ],
                 },
-                include:[
-                    {
-                        model: Config,
-                        where: {
-                            interest: user.config.interest
-                        }
-                    }],
-                }
-            )
+            })
         })
     },
     
