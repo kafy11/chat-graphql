@@ -82,14 +82,6 @@ const Mutation = new GraphQLObjectType({
         },
         resolve: async (root,args) => LikeResolver.interaction(args)
       },
-      
-      startSocket: {
-        type: Message,
-        args:{
-          id: {type: new GraphQLNonNull(GraphQLInt)},
-        },
-        resolve: async (root,args) => MessageResolver.startSocket(args)
-      },
 
       deleteMessage: {
         type: Message,
@@ -97,6 +89,17 @@ const Mutation = new GraphQLObjectType({
           id: {type: new GraphQLNonNull(GraphQLInt)},
         },
         resolve: async (root,args) => MessageResolver.deleteMessage(args)
+      },
+
+      addMessage: {
+        type: Message,
+        args:{
+          id: {type: new GraphQLNonNull(GraphQLInt)},
+          content: {type: new GraphQLNonNull(GraphQLString)},
+          authorId: {type: new GraphQLNonNull(GraphQLInt)},
+          receiverId: {type: new GraphQLNonNull(GraphQLInt)}
+        },
+        resolve: async (root, args) => MessageResolver.addMessage(args)
       }
     }
   },

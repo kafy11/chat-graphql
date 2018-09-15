@@ -6,6 +6,8 @@ import {
     GraphQLFloat,
     GraphQLList
 } from 'graphql';
+import UserType from './user.type';
+import UserLoader from '../Loaders/user.loader';
 
 const graphObj = new GraphQLObjectType({
     name:"Conversation",
@@ -19,17 +21,15 @@ const graphObj = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
             description:'conteudo da mensagem'
         },
-        conversationId: {
-            type: new GraphQLNonNull(GraphQLInt),
-            description:'Id da conversa'
+        author: {
+            type: new GraphQLNonNull(UserType),
+            description:'autor da mensagem',
+            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.authorId })
         },
-        authorId: {
-            type: new GraphQLNonNull(GraphQLInt),
-            description:'id do autor da mensagem'
-        },
-        receiverId: {
-            type: new GraphQLNonNull(GraphQLInt),
-            description:'id do destinatario da mensagem'
+        receiver: {
+            type: new GraphQLNonNull(UserType),
+            description:'destinatario da mensagem',
+            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.receiverId })
         },
     }
 });

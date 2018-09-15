@@ -1,37 +1,38 @@
-import {User, Config, Conversation, Message} from '../../db/mysql';
+import {User, Config, Message} from '../../db/mysql';
 
-import sequelize from 'sequelize';
+import Conn from '../../db/mysql';
 
 const fetch = {
     conversations: async function (args){
-        const users = {};
-        return await Conversation.findAll({
-            where: {
-                $or: [
-                    {participantId: args.id},
-                    {participant2Id: args.id},
-                ]
-            },
-            include: [
-                { model: User, as: 'participant' },
-                { model: User, as: 'participant2' }
-            ]
-        }).then(conversations=>{
-            // conversations.forEach(conversation=>{
-            //     console.log(conversation)
-            //     users[0] = {'name': conversation.participant.name};
-            // })
-            // console.log(conversations.length)
-            for(let i = 0; i < conversations.length; i++){
-                users[i] = {'conversation_id': conversations[i].id,'conversation_with': conversations[i].participant2.name, 'current_user': conversations[i].participant.name,};
-            }
-            console.log(users)
-            return users;
-        })
+        const nameWhere = (args.name) ? `WHERE u.name = '${args.name}'` : ''; 
+
+        return await Conn.query(`SELECT m.*
+            FROM (
+                SELECT CASE WHEN authorId = ${args.userId} THEN receiverId ELSE authorId END AS userId,
+                                MAX(id) AS id
+                FROM messages 
+                WHERE ${args.userId} IN (authorId,receiverId)
+                GROUP BY CASE WHEN authorId = ${args.userId} THEN receiverId ELSE authorId END
+            ) l
+            JOIN messages m
+            ON m.id = l.id 
+            JOIN users u 
+            ON u.id = l.userId 
+            ${nameWhere} 
+            ORDER BY m.id DESC`, { model: Message });
     },
 
-    mensagens: async function (args){
-        return await Message.findAll({where: {conversationId: args.id}})
+    messages: async function ({ ids }){
+        return await Message.findAll({
+            where: { 
+                authorId: { 
+                    $in: ids
+                },
+                receiverId: { 
+                    $in: ids
+                }
+            }
+        });
     },
 }
 

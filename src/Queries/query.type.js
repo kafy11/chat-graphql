@@ -17,6 +17,14 @@ const Query = new GraphQLObjectType({
     name:'Query',
     description:'Query para interação com a api do sistema de beach paquera',
     fields: () => ({
+        user: {
+            description:'Busca de Usuarios',
+            args: {
+                id: {descripton:'ID unico do usuario',type: GraphQLInt},
+            },
+            type: UserType,
+            resolve: (root,args) => UserLoader.fetch(args)
+        },
         users: {
             description:'Busca de Usuarios',
             args: {
@@ -52,20 +60,19 @@ const Query = new GraphQLObjectType({
         conversations: {
             description: 'Conversas do usuario',
             args: {
-                id: {descripton:'Id da conversa',type: GraphQLInt},
+                userId: {descripton:'Id do usuário logado',type: GraphQLInt},
                 name: {description: 'Nome do usuario da conversa', type: GraphQLString}
             },
-            type: new GraphQLList(UserType),
+            type: new GraphQLList(MessageType),
             resolve: (_, args) => ConversationLoader.conversations(args)
         },
         messages: {
-            description: 'Id da conversa',
+            description: 'Mensagens de uma conversa',
             args: {
-                id: {description: 'Id da conversa', type: GraphQLInt}
+                ids: { description: 'Ids dos usuários', type: new GraphQLList(GraphQLInt) }
             },
             type: new GraphQLList(MessageType),
-            resolve: (root, args) => ConversationLoader.mensagens(args),
-
+            resolve: (root, args) => ConversationLoader.messages(args),
         },
         userConfig: {
             description: 'Configuração de um usuario',
