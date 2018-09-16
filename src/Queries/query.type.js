@@ -60,8 +60,9 @@ const Query = new GraphQLObjectType({
         conversations: {
             description: 'Conversas do usuario',
             args: {
-                userId: {descripton:'Id do usuário logado',type: GraphQLInt},
-                name: {description: 'Nome do usuario da conversa', type: GraphQLString}
+                userId: {descripton:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
+                name: {description: 'Nome do usuario da conversa', type: GraphQLString},
+                offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
             },
             type: new GraphQLList(MessageType),
             resolve: (_, args) => ConversationLoader.conversations(args)
@@ -69,7 +70,8 @@ const Query = new GraphQLObjectType({
         messages: {
             description: 'Mensagens de uma conversa',
             args: {
-                ids: { description: 'Ids dos usuários', type: new GraphQLList(GraphQLInt) }
+                ids: { description: 'Ids dos usuários', type: new GraphQLList(GraphQLInt) },
+                offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
             },
             type: new GraphQLList(MessageType),
             resolve: (root, args) => ConversationLoader.messages(args),
