@@ -21,6 +21,10 @@ const graphObj = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
             description:'conteudo da mensagem'
         },
+        createdAt: {
+            type: GraphQLString, 
+            description: 'data que a mensagem foi enviada'
+        },
         author: {
             type: new GraphQLNonNull(UserType),
             description:'autor da mensagem',
