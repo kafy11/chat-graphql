@@ -4,7 +4,7 @@ import Conn from '../../db/mysql';
 
 const fetch = {
     conversations: async function (args){
-        const nameWhere = (args.name) ? `AND u.name = '${args.name}'` : ''; 
+        const nameWhere = (args.name) ? `AND LOWER(u.name) LIKE LOWER('%${args.name}%')` : ''; 
         const offsetWhere = (args.offsetMessage) ? `AND m.id < ${args.offsetMessage}` : '';
 
         return await Conn.query(`SELECT m.*
