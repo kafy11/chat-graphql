@@ -3,8 +3,6 @@ import {
     GraphQLNonNull,
     GraphQLString,
     GraphQLInt,
-    GraphQLFloat,
-    GraphQLList
 } from 'graphql';
 
 const graphObj = new GraphQLObjectType({

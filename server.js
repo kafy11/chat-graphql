@@ -14,8 +14,6 @@ const server = Hapi.server({
     port:3000
 });
 
-const io = require('socket.io')(server.listener);
-
 async function registerGraphql(){
     await server.register({
         plugin: graphqlHapi,
@@ -64,7 +62,7 @@ async function registerRoutes(server){
         handler: function(request, h){
             return h.file('./src/chat/chat.html');
         }
-    })
+    });
     await registerGraphql();
 }
 
@@ -115,5 +113,3 @@ start(server);
 //         socket.broadcast.emit('receivedMessage', data);
 //     })
 // })
-
-export default io;

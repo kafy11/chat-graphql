@@ -1,3 +1,5 @@
+import { GraphQLUpload } from 'apollo-upload-server';
+
 import {
   GraphQLObjectType,
   GraphQLString,
@@ -10,11 +12,14 @@ import AuthResolver from './Resolvers/auth.resolver';
 import UserResolver from './Resolvers/user.resolver';
 import LikeResolver from './Resolvers/like.resolver';
 import MessageResolver from './Resolvers/message.resolver';
+import UploadResolver from './Resolvers/upload.resolver';
+
 
 import User from './../Queries/types/user.type';
 import UserConfig from './../Queries/types/userConfig.type';
 import Like from '../Queries/types/like.type';
 import Message from '../Queries/types/message.type';
+import FileType from '../Queries/types/files.type';
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -100,7 +105,16 @@ const Mutation = new GraphQLObjectType({
           receiverId: {type: new GraphQLNonNull(GraphQLInt)}
         },
         resolve: async (root, args) => MessageResolver.addMessage(args)
+      },
+
+      singleUpload: {
+        type: FileType,
+        args:{
+          image: {type: GraphQLUpload},
+        },
+        resolve: async (_, args) => UploadResolver.singleUpload(args)
       }
+
     }
   },
 });

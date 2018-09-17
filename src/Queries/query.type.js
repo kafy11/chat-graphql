@@ -83,7 +83,7 @@ const Query = new GraphQLObjectType({
             },
             type: new GraphQLList(UserConfigType),
             resolve: (root, args) => UserLoader.config(args)
-        }
+        },
     })
 });
 
