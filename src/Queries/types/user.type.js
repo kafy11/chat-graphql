@@ -7,6 +7,9 @@ import {
     GraphQLList,
 } from 'graphql';
 
+import userInteraction from './userInteraction.type';
+import UserLoader from '../Loaders/user.loader';
+
 const GeoLocation = new GraphQLObjectType({
     name:"user_geolocation",
     description:"Geolocalizacao do usuário",
@@ -74,7 +77,17 @@ const graphObj = new GraphQLObjectType({
         age: {
             type: GraphQLInt,
             description:'Idade do usuário'
-        }
+        },
+        interactions: {
+            type: userInteraction,
+            description:'Interações que o usuário recebeu a partir do usuário logado',
+            args: {
+                id: {descripton:'Id do usuario logado',type: GraphQLInt}
+            },
+            resolve: (parentValue,args,context) => {
+                return UserLoader.interaction({ user_id: args.id, user_liked_id: parentValue.id })
+            }
+        },
     }
 });
 

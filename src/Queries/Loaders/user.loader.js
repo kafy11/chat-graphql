@@ -1,4 +1,4 @@
-import { User, Config } from '../../db/mysql';
+import { User, Config, Like } from '../../db/mysql';
 
 import sequelize from 'sequelize';
 
@@ -79,6 +79,23 @@ const fetch = {
             limit: 1
         });
     },
+
+    interaction: async function(args,res){
+
+        return Like.findAll({
+            where: {user_liked_id:args.user_liked_id, user_id: args.user_id}
+        }).then(result => {
+            let ret = {};
+
+            result.forEach((data)=>{
+                if(data.type == 'heart'){
+                    ret['heart'] = 1;
+                }
+            });
+            
+            return ret;
+        });
+    }
 }
 
 export default fetch;
