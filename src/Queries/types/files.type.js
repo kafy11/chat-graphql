@@ -1,16 +1,25 @@
 import {
     GraphQLObjectType,
     GraphQLBoolean,
+    GraphQLString
 } from 'graphql';
 
 const graphObj = new GraphQLObjectType({
-    name:"FileUpload",
-    description:"Uploads an image",
+    name:"arquivos",
+    description:"arquivos",
     fields: {
-        image: {
+        id: {
             type: GraphQLBoolean,
-            description:'Image file.'
+            description:'Id do arquivo'
         },
+        name: {
+            type: GraphQLString,
+            description: 'Nome do arquivo',
+        },
+        path: {
+            type: GraphQLString,
+            description: 'Local do arquivo',
+        }
     }
 });
 

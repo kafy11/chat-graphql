@@ -6,6 +6,7 @@ import messages from './models/messages';
 import participants from './models/participants';
 import passwordresets from './models/passwordresets';
 import configs from './models/configs';
+import files from './models/files';
 
 const Conn = new Sequelize(
     'beach_paquera',
@@ -39,16 +40,15 @@ const UserIndexes = {
 const User = Conn.define('users',users,UserIndexes);
 const Config = Conn.define('configs', configs);
 const Like = Conn.define('likes', likes);
+const File = Conn.define('files', files);
 const Message = Conn.define('messages', messages, {
   charset: 'utf8mb4',
   collate: 'utf8mb4_bin'
 });
 
 User.hasOne(Config);
-// User.belongsToMany(User, {through: Conversation, as: 'user2'});
-// User.belongsToMany(User, {through: Message, as: 'receiver', foreignKey: 'author'});
-// User.hasMany(Conversation, {as:'participant'});
-// User.hasMany(Conversation, {as:'participant2'});
+User.hasMany(File);
+File.belongsTo(User);
 Message.belongsTo(User, {as: 'author'});
 Message.belongsTo(User, {as: 'receiver'});
 

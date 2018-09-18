@@ -1,9 +1,30 @@
+import mysql from 'mysql2';
 
 const result = {
-    singleUpload: async function (parent, { image }) {
-        const { filename, mimetype, createReadStream } = await image
-        const stream = createReadStream()
+    store: async function (args, options){
+        console.log(options)
+        const con = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "beach_paquera"
+        })
+        con.connect(function(err){
+            if (err) throw err;
 
-        return true
-      }
+            if(options.type !== 'profile'){
+                var sql = "INSERT INTO files (name, path, userId) VALUES ('"+args.filename+"', '"+args.path+"', '"+options.user+"')";
+            }else{
+                var sql = "UPDATE users SET photo='"+args.path+"' WHERE id = '"+options.user+"'";
+            }
+
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+
+                return result;
+            });
+        })
+    }
 }
+
+export default result;

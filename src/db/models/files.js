@@ -13,6 +13,9 @@ const schema = {
     },
     path : {
         type: Sequelize.STRING
+    },
+    type : {
+        type: Sequelize.STRING
     }
 };
 

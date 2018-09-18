@@ -8,6 +8,10 @@ import HapiAuth from 'hapi-auth-basic';
 import users from './src/db/auth';
 import Bcrypt from 'bcrypt';
 import { isObject } from 'util';
+import fs from 'fs';
+import Boom from 'boom';    
+import path from 'path';
+import upload from './src/Mutations/Resolvers/upload.resolver';
 
 const server = Hapi.server({
     host:'localhost',
@@ -25,7 +29,7 @@ async function registerGraphql(){
             }
         }
     });
-
+    
     await server.register({
         plugin: graphiqlHapi,
         options: {
@@ -38,12 +42,6 @@ async function registerGraphql(){
         }
     });
 }
-
-// async function registerSocket(server){
-//     await server.register({
-//         plugin: hapiSocketIo,
-//     });
-// }
 
 async function registerRoutes(server){
     server.route({
@@ -63,7 +61,88 @@ async function registerRoutes(server){
             return h.file('./src/chat/chat.html');
         }
     });
+    
+    server.route({
+        method: 'POST',
+        path: '/upload',
+        config: {
+            payload: {
+                output: 'stream',
+                allow: 'multipart/form-data'
+            }
+        },
+        handler: async function (request, reply) {
+            const UPLOAD_PATH = 'uploads';
+            const fileOptions = { dest: `${UPLOAD_PATH}/` };
+
+            // create folder for upload if not exist
+            if (!fs.existsSync(UPLOAD_PATH)) fs.mkdirSync(UPLOAD_PATH);
+            try{
+                const data = request.payload;
+                const files = data['image'];
+                
+                const filesDetails = await uploader(files, fileOptions);
+                const options = {
+                    user: data['id'],
+                    type: data['type']
+                }
+
+                const insert = {
+                    resolve: upload.store(filesDetails, options)
+                }
+
+                return insert;
+
+            } catch (err){
+                return Boom.badRequest(err.message, err);
+            }
+        }
+    });
+    
     await registerGraphql();
+}
+
+const _fileHandler = function (file, options) {
+    if (!file) throw new Error('no file');
+    
+    const orignalname = file.hapi.filename;
+    const filename = file.hapi.filename;
+    const path = `${options.dest}${filename}`;
+    const fileStream = fs.createWriteStream(path);
+    
+    return new Promise((resolve, reject) => {
+        file.pipe(fileStream);
+        
+        file.on('end', function (err) {
+            file.on('error', function (err) {
+                reject(err);
+            });
+            
+            const fileDetails = {
+                fieldname: file.hapi.name,
+                originalname: file.hapi.filename,
+                filename,
+                mimetype: file.hapi.headers['content-type'],
+                destination: `${options.dest}`,
+                path,
+                size: fs.statSync(path).size,
+            }
+            
+            resolve(fileDetails);
+        })
+    })
+}
+
+const _filesHandler = function (files, options) {
+    if (!files || !Array.isArray(files)) throw new Error('no files');
+    console.log(files)
+    const promises = files.map(x => _fileHandler(x, options));
+    return Promise.all(promises);
+}
+
+const uploader = function (file, options) {
+    if (!file) throw new Error('no file(s)');
+    return Array.isArray(file) ? _filesHandler(file, options) : _fileHandler(file, options);
 }
 
 async function auth(server){

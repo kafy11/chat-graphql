@@ -1,8 +1,11 @@
 import UserConfigType from './types/userConfig.type';
 import UserType from './types/user.type';
 import MessageType from './types/message.type';
+import FileType from './types/files.type';
+
 import UserLoader from './Loaders/user.loader';
 import ConversationLoader from './Loaders/conversation.loader';
+import FileLoader from './Loaders/file.loader';
 
 import {
     GraphQLObjectType,
@@ -84,6 +87,16 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(UserConfigType),
             resolve: (root, args) => UserLoader.config(args)
         },
+
+        file: {
+            description: 'Arquivos',
+            args: {
+                id: {description:'id do arquivo', type: GraphQLInt},
+                userId: {description:'id do usuario autor do arquivo', type: GraphQLInt}
+            },
+            type: new GraphQLList(FileType),
+            resolve: (root, args) => FileLoader.file(args)
+        }
     })
 });
 
