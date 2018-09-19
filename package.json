@@ -34,14 +34,8 @@
     "hapi-auth-basic": "^5.0.0",
     "http": "0.0.0",
     "inert": "^5.1.0",
-<<<<<<< HEAD
-    "node-gyp": "^3.8.0",
     "npm": "^6.4.0",
+    "subscriptions-transport-ws": "^0.9.15",
     "uuid-token-generator": "^1.0.0"
-=======
-    "lokijs": "^1.5.5",
-    "npm": "^6.4.0",
-    "subscriptions-transport-ws": "^0.9.15"
->>>>>>> afa7c8de81ec64f1de50f1f4cd117c376d47cb10
   }
 }
