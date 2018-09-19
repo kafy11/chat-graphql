@@ -52,6 +52,9 @@ const schema = {
         defaultValue:1
     },
     photo: Sequelize.STRING(500),
+    reset_pass: {
+        type: Sequelize.STRING
+    },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 };

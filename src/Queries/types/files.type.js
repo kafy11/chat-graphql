@@ -1,6 +1,6 @@
 import {
     GraphQLObjectType,
-    GraphQLBoolean,
+    GraphQLInt,
     GraphQLString
 } from 'graphql';
 
@@ -9,7 +9,7 @@ const graphObj = new GraphQLObjectType({
     description:"arquivos",
     fields: {
         id: {
-            type: GraphQLBoolean,
+            type: GraphQLInt,
             description:'Id do arquivo'
         },
         name: {

@@ -52,5 +52,5 @@ File.belongsTo(User);
 Message.belongsTo(User, {as: 'author'});
 Message.belongsTo(User, {as: 'receiver'});
 
-export {User, Config, Like, Message};
+export {User, Config, Like, Message, File};
 export default Conn;

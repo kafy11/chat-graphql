@@ -74,6 +74,10 @@ const graphObj = new GraphQLObjectType({
         age: {
             type: GraphQLInt,
             description:'Idade do usuário'
+        },
+        reset_pass: {
+            type: GraphQLString,
+            description: 'token para resetar senha'
         }
     }
 });

@@ -31,7 +31,8 @@
     "hapi": "^17.5.0",
     "hapi-auth-basic": "^5.0.0",
     "inert": "^5.1.0",
-    "lokijs": "^1.5.5",
-    "npm": "^6.4.0"
+    "node-gyp": "^3.8.0",
+    "npm": "^6.4.0",
+    "uuid-token-generator": "^1.0.0"
   }
 }

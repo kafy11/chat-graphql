@@ -23,7 +23,7 @@ const Query = new GraphQLObjectType({
         user: {
             description:'Busca de Usuarios',
             args: {
-                id: {descripton:'ID unico do usuario',type: GraphQLInt},
+                id: {description:'ID unico do usuario',type: GraphQLInt},
             },
             type: UserType,
             resolve: (root,args) => UserLoader.fetch(args)
@@ -31,9 +31,9 @@ const Query = new GraphQLObjectType({
         users: {
             description:'Busca de Usuarios',
             args: {
-                id: {descripton:'ID unico do usuario',type: GraphQLInt},
-                name: {descripton:'nome do usuario',type: GraphQLString},
-                email: {descripton:'email do usuario',type: GraphQLString},
+                id: {description:'ID unico do usuario',type: GraphQLInt},
+                name: {description:'nome do usuario',type: GraphQLString},
+                email: {description:'email do usuario',type: GraphQLString},
             },
             type: new GraphQLList(UserType),
             resolve: (root,args) => UserLoader.fetchAll(args)
@@ -41,11 +41,11 @@ const Query = new GraphQLObjectType({
         feed: {
             description: 'Feed do usuario',
             args: {
-                id: {descripton:'Id do usuario logado',type: GraphQLInt},
-                limit: {descripton:'Usuarios por pagina',type: GraphQLInt},
-                offset: {descripton:'Pagina a ser exibida',type: GraphQLInt},
-                lat: {descripton:'Latitude do usuario logado',type: new GraphQLNonNull(GraphQLFloat)},
-                long: {descripton:'Longitude do usuario logado',type: new GraphQLNonNull(GraphQLFloat)}
+                id: {description:'Id do usuario logado',type: GraphQLInt},
+                limit: {description:'Usuarios por pagina',type: GraphQLInt},
+                offset: {description:'Pagina a ser exibida',type: GraphQLInt},
+                lat: {description:'Latitude do usuario logado',type: new GraphQLNonNull(GraphQLFloat)},
+                long: {description:'Longitude do usuario logado',type: new GraphQLNonNull(GraphQLFloat)}
             },
             type: new GraphQLList(UserType),
             resolve: (_, args) => UserLoader.feed(args)
@@ -53,9 +53,9 @@ const Query = new GraphQLObjectType({
         flirtList: {
             description: 'Lista usuário próximos por geolocalização',
             args: {
-                id: {descripton:'id do usuario logado',type: GraphQLInt},
-                lat: {descripton:'Latitude do usuario logado',type: GraphQLFloat},
-                long: {descripton:'Longitude do usuario logado',type: GraphQLFloat},
+                id: {description:'id do usuario logado',type: GraphQLInt},
+                lat: {description:'Latitude do usuario logado',type: GraphQLFloat},
+                long: {description:'Longitude do usuario logado',type: GraphQLFloat},
             },
             type: new GraphQLList(UserType),
             resolve: (root, args) => UserLoader.flirtList(args)
@@ -63,7 +63,7 @@ const Query = new GraphQLObjectType({
         conversations: {
             description: 'Conversas do usuario',
             args: {
-                userId: {descripton:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
+                userId: {description:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
                 name: {description: 'Nome do usuario da conversa', type: GraphQLString},
                 offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
             },
@@ -82,7 +82,7 @@ const Query = new GraphQLObjectType({
         userConfig: {
             description: 'Configuração de um usuario',
             args: {
-                id: {descripton:'id do usuario',type: GraphQLInt}
+                id: {description:'id do usuario',type: GraphQLInt}
             },
             type: new GraphQLList(UserConfigType),
             resolve: (root, args) => UserLoader.config(args)
@@ -96,6 +96,16 @@ const Query = new GraphQLObjectType({
             },
             type: new GraphQLList(FileType),
             resolve: (root, args) => FileLoader.file(args)
+        },
+
+        passwordReset: {
+            description: 'Verificar token e usuario',
+            args: {
+                token: {description: 'Token para resetar senha', type: GraphQLString},
+                email: {description: 'Email do usuario', type: GraphQLString}
+            },
+            type: new GraphQLList(UserType),
+            resolve: (_,args) => UserLoader.passwordReset(args)
         }
     })
 });
