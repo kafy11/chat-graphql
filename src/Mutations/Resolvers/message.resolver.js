@@ -1,4 +1,5 @@
 import { Message } from '../../db/mysql';
+import pubsub, { MESSAGE_SUBSCRIPTION_TOPIC } from '../../Subscriptions/pubsub';
 
 const result = {
     deleteMessage: async function(args){
@@ -9,6 +10,7 @@ const result = {
 
     addMessage: async function (args){
         return Message.create(args).then(message =>{
+            pubsub.publish(MESSAGE_SUBSCRIPTION_TOPIC, { message });
             return message;
         })
     }

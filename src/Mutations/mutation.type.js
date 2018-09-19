@@ -99,7 +99,6 @@ const Mutation = new GraphQLObjectType({
       addMessage: {
         type: Message,
         args:{
-          id: {type: new GraphQLNonNull(GraphQLInt)},
           content: {type: new GraphQLNonNull(GraphQLString)},
           authorId: {type: new GraphQLNonNull(GraphQLInt)},
           receiverId: {type: new GraphQLNonNull(GraphQLInt)}

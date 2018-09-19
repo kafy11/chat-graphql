@@ -12,6 +12,8 @@ import fs from 'fs';
 import Boom from 'boom';    
 import path from 'path';
 import upload from './src/Mutations/Resolvers/upload.resolver';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
 
 const server = Hapi.server({
     host:'localhost',
@@ -36,10 +38,20 @@ async function registerGraphql(){
             path:'/debug',
             graphiqlOptions: {
                 endpointURL: '/graph',
+                subscriptionsEndpoint: `ws://localhost:3000/subscriptions`,
                 formatError: (error) => ({key:error.key,message: error.message, location:error.location, stack:error.stack}),
                 debug: true
             }
         }
+    });
+
+    new SubscriptionServer({
+        execute,
+        subscribe,
+        schema: Schema
+      }, {
+        server: server.listener,
+        path: '/subscriptions',
     });
 }
 
