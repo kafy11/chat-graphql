@@ -15,6 +15,7 @@ import upload from './src/Mutations/Resolvers/upload.resolver';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 
+
 const server = Hapi.server({
     host:'localhost',
     port:3000
@@ -85,7 +86,7 @@ async function registerRoutes(server){
         },
         handler: async function (request, reply) {
             const UPLOAD_PATH = 'uploads';
-            const fileOptions = { dest: `${UPLOAD_PATH}/` };
+            const fileOptions = { dest: `${UPLOAD_PATH}/`};
 
             // create folder for upload if not exist
             if (!fs.existsSync(UPLOAD_PATH)) fs.mkdirSync(UPLOAD_PATH);
@@ -93,16 +94,15 @@ async function registerRoutes(server){
                 const data = request.payload;
                 const files = data['image'];
                 
+                
                 const filesDetails = await uploader(files, fileOptions);
                 const options = {
                     user: data['id'],
                     type: data['type']
                 }
 
-                const insert = {
-                    resolve: upload.store(filesDetails, options)
-                }
-
+                const insert = await upload.store(filesDetails, options)
+                console.log('insert',insert);
                 return insert;
 
             } catch (err){
@@ -118,7 +118,11 @@ const _fileHandler = function (file, options) {
     if (!file) throw new Error('no file');
     
     const orignalname = file.hapi.filename;
-    const filename = file.hapi.filename;
+
+    let len = file.hapi.filename.length;
+    let extension = file.hapi.filename.substring(len-4,len);
+    const filename = Date.now()+extension;
+
     const path = `${options.dest}${filename}`;
     const fileStream = fs.createWriteStream(path);
     
