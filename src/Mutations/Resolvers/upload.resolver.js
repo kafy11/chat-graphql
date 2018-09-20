@@ -1,5 +1,3 @@
-import mysql from 'mysql2';
-
 import {User, File} from '../../db/mysql';
 
 const result = {

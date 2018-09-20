@@ -65,6 +65,19 @@ async function registerRoutes(server){
         },
         handler: ()=> 'Running Server'
     });
+
+    server.route({
+        method: "GET",
+        path: "/uploads/{file*}",
+        
+        handler: {
+            directory: {
+                path: './uploads',
+                redirectToSlash: true,
+                index: true,
+            }
+        }
+    });
     
     server.route({
         method: "GET",
