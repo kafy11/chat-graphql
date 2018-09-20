@@ -95,7 +95,20 @@ const fetch = {
             
             return ret;
         });
+    },
+
+    passwordReset: async function(args){
+        return User.findAll(
+            {
+                where:{
+                    email: args.email,
+                    $and:[{reset_pass: args.token}]
+                }
+            }
+        )
     }
+
+    
 }
 
 export default fetch;

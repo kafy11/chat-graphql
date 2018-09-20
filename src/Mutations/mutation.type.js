@@ -112,6 +112,24 @@ const Mutation = new GraphQLObjectType({
           image: {type: GraphQLUpload},
         },
         resolve: async (_, args) => UploadResolver.singleUpload(args)
+      },
+
+      passwordResetToken: {
+        type: User,
+        args: {
+          email: {type: GraphQLString}
+        },
+        resolve: async (_, args) => UserResolver.passwordResetToken(args)
+      },
+
+      passwordReset: {
+        type: User,
+        args: {
+          id: {type: GraphQLInt},
+          password: {type: GraphQLString},
+          password_confirm: {type: GraphQLString}
+        },
+        resolve: async (_, args) => UserResolver.passwordReset(args)
       }
 
     }

@@ -88,6 +88,10 @@ const graphObj = new GraphQLObjectType({
                 return UserLoader.interaction({ user_id: args.id, user_liked_id: parentValue.id })
             }
         },
+        reset_pass: {
+            type: GraphQLString,
+            description: 'token para resetar senha'
+        }
     }
 });
 

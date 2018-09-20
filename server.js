@@ -181,8 +181,7 @@ const validate = async (request, username, password) => {
 async function start(server){
     try {
         await server.register(require('inert'));
-        await auth(server);
-        // await registerSocket(server);        
+        await auth(server);    
         await registerRoutes(server);
         await server.start();
         /*Bcrypt.hash('app@paquera@beach', 2, function(err, hash) {
@@ -196,15 +195,3 @@ async function start(server){
 }
 
 start(server);
-
-// let messsages = [];
-// io.on('connection', function(socket){
-//     console.log(socket.id)
-//     socket.emit('previousMessages', messsages);
-
-//     socket.on('sendMessage', function(data){
-//         console.log(data)
-//         messsages.push(data);
-//         socket.broadcast.emit('receivedMessage', data);
-//     })
-// })
