@@ -72,6 +72,19 @@ async function registerRoutes(server){
 
     server.route({
         method: "GET",
+        path: "/uploads/{file*}",
+        
+        handler: {
+            directory: {
+                path: './uploads',
+                redirectToSlash: true,
+                index: true,
+            }
+        }
+    });
+    
+    server.route({
+        method: "GET",
         path: "/chat",
         
         handler: function(request, h){
@@ -91,7 +104,7 @@ async function registerRoutes(server){
         },
         handler: async function (request, reply) {
             const UPLOAD_PATH = 'uploads';
-            const fileOptions = { dest: `${UPLOAD_PATH}/` };
+            const fileOptions = { dest: `${UPLOAD_PATH}/`};
 
             // create folder for upload if not exist
             if (!fs.existsSync(UPLOAD_PATH)) fs.mkdirSync(UPLOAD_PATH);
@@ -99,16 +112,15 @@ async function registerRoutes(server){
                 const data = request.payload;
                 const files = data['image'];
                 
+                
                 const filesDetails = await uploader(files, fileOptions);
                 const options = {
                     user: data['id'],
                     type: data['type']
                 }
 
-                const insert = {
-                    resolve: upload.store(filesDetails, options)
-                }
-
+                const insert = await upload.store(filesDetails, options)
+                console.log('insert',insert);
                 return insert;
 
             } catch (err){
@@ -126,7 +138,11 @@ const _fileHandler = function (file, options) {
     if (!file) throw new Error('no file');
     
     const orignalname = file.hapi.filename;
-    const filename = file.hapi.filename;
+
+    let len = file.hapi.filename.length;
+    let extension = file.hapi.filename.substring(len-4,len);
+    const filename = Date.now()+extension;
+
     const path = `${options.dest}${filename}`;
     const fileStream = fs.createWriteStream(path);
     
