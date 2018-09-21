@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel-node server.js",
-    "prod": "pm2 start server.js",
+    "prod": "pm2 start server.js --interpreter babel-node",
     "schema": "babel-node ./src/db/syncMysql.js"
   },
   "author": "Vinicius Rangel (4Pixels)",
