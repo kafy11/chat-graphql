@@ -6,7 +6,6 @@ import {graphqlHapi, graphiqlHapi} from 'apollo-server-hapi';
 import { formatError } from "apollo-errors";
 import HapiAuth from 'hapi-auth-basic';
 import users from './src/db/auth';
-import Bcrypt from 'bcrypt';
 import { isObject } from 'util';
 import fs from 'fs';
 import Boom from 'boom';    
@@ -192,7 +191,7 @@ const validate = async (request, username, password) => {
         return { credentials: null, isValid: false };
     }
     
-    const isValid = await Bcrypt.compare(password, user.password);
+    const isValid = (password == user.password);
     const credentials = { id: user.id, name: user.name };
     
     return { isValid, credentials };
