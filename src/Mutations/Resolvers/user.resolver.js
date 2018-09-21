@@ -52,19 +52,24 @@ const fetch = {
         passwordResetToken: async function (args){
                 const tokgen = new TokenGenerator();
                 return await User.update(
-                    {reset_pass: tokgen.generate()},
-                    {where: {email: args.email}}
-                    )
+                        {reset_pass: tokgen.generate()},
+                        {where: {email: args.email}}
+                    ).then(user=>{
+                        console.log(user)
+                        return user
+                    })
         },
                 
         passwordReset: async function (args){
+
             return await User.update(
                 {
                     password: args.password,
                     reset_pass: null,
                 },
                 {
-                    where: {id: args.id}
+                    where: {id: args.id},
+                    $and:[{reset_pass: args.token}]
                 }).then(user=>{
                     return user
                 })

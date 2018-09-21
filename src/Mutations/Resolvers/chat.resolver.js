@@ -14,7 +14,7 @@ const result = {
     newMessage: async function(args){
         return Message.create({
             chatId: args.chat,
-            authorId: args.author,
+            senderId: args.sender,
             receiverId: args.receiver,
             content: args.content
         })
