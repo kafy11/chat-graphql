@@ -55,6 +55,9 @@ const schema = {
     reset_pass: {
         type: Sequelize.STRING
     },
+    socketId: {
+        type: Sequelize.STRING
+    },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
 };

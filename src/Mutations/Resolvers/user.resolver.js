@@ -37,9 +37,9 @@ const fetch = {
                 ).then(result=>{
                     return Config.find({where:{userId:id}});
                 });
-            },
+        },
             
-            interest: async function (args){
+        interest: async function (args){
                 User.findById(args.id).then(user=>{
                     Config.find({where: {userID: user.id}}).then(config=>{
                         config.update({
@@ -47,29 +47,37 @@ const fetch = {
                         })
                     })
                 });
-            },
+        },    
             
-            passwordResetToken: async function (args){
+        passwordResetToken: async function (args){
                 const tokgen = new TokenGenerator();
                 return await User.update(
                     {reset_pass: tokgen.generate()},
                     {where: {email: args.email}}
                     )
-                },
+        },
                 
-                passwordReset: async function (args){
-                    return await User.update(
-                        {
-                            password: args.password,
-                            reset_pass: null,
-                        },
-                        {
-                            where: {id: args.id}
-                        }
-                        ).then(user=>{
-                            return user
-                        })
-                    }
-                }
+        passwordReset: async function (args){
+            return await User.update(
+                {
+                    password: args.password,
+                    reset_pass: null,
+                },
+                {
+                    where: {id: args.id}
+                }).then(user=>{
+                    return user
+                })
+        },
+
+        socketId: async function (id, socketId) {
+            return await User.update(
+                {
+                    socketId: socketId
+                },
+                {where: {id: id}}
+            )
+        }
+}
                 
                 export default fetch;

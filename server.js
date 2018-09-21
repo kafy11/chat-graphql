@@ -12,13 +12,18 @@ import fs from 'fs';
 import Boom from 'boom';    
 import path from 'path';
 import upload from './src/Mutations/Resolvers/upload.resolver';
+import ioHandlers from './src/Socket/handlers';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
+
 
 const server = Hapi.server({
     host:'localhost',
     port:3000
 });
+
+var io = require('socket.io')(server.listener);
+io.on('connection', ioHandlers);
 
 async function registerGraphql(){
     await server.register({
@@ -64,15 +69,16 @@ async function registerRoutes(server){
         },
         handler: ()=> 'Running Server'
     });
-    
+
     server.route({
         method: "GET",
         path: "/chat",
         
         handler: function(request, h){
-            return h.file('./src/chat/chat.html');
+            return h.file('./src/Socket/client-teste/chat.html');
         }
-    });
+    })
+
     
     server.route({
         method: 'POST',
@@ -110,6 +116,8 @@ async function registerRoutes(server){
             }
         }
     });
+
+    
     
     await registerGraphql();
 }
