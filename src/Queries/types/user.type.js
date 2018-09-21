@@ -91,6 +91,10 @@ const graphObj = new GraphQLObjectType({
         reset_pass: {
             type: GraphQLString,
             description: 'token para resetar senha'
+        },
+        socketId: {
+            type: GraphQLString,
+            description: 'Socket.io id do usuario'
         }
     }
 });

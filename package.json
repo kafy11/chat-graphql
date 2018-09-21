@@ -35,6 +35,7 @@
     "inert": "^5.1.0",
     "mysql2": "^1.6.1",
     "npm": "^6.4.0",
+    "socket.io": "^2.1.1",
     "subscriptions-transport-ws": "^0.9.15",
     "uuid-token-generator": "^1.0.0"
   }
