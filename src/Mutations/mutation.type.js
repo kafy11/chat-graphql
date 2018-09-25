@@ -125,7 +125,7 @@ const Mutation = new GraphQLObjectType({
       passwordReset: {
         type: User,
         args: {
-          id: {type: GraphQLInt},
+          email: {type: GraphQLString},
           token: {type: GraphQLString},
           password: {type: GraphQLString},
           password_confirm: {type: GraphQLString}

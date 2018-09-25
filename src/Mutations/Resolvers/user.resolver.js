@@ -68,7 +68,7 @@ const fetch = {
                     reset_pass: null,
                 },
                 {
-                    where: {id: args.id},
+                    where: {email: args.email},
                     $and:[{reset_pass: args.token}]
                 }).then(user=>{
                     return user
