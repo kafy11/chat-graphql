@@ -119,8 +119,7 @@ async function registerRoutes(server){
                 }
 
                 const insert = await upload.store(filesDetails, options)
-                console.log('insert',insert);
-                return insert;
+                return filesDetails.path;
 
             } catch (err){
                 return Boom.badRequest(err.message, err);
@@ -170,7 +169,6 @@ const _fileHandler = function (file, options) {
 
 const _filesHandler = function (files, options) {
     if (!files || !Array.isArray(files)) throw new Error('no files');
-    console.log(files)
     const promises = files.map(x => _fileHandler(x, options));
     return Promise.all(promises);
 }
