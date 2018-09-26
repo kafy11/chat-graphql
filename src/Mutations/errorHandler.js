@@ -10,16 +10,26 @@ const EmailExist = createError("EmailExist", {
 
 const CantCreate = createError('CantCreate',{
     message: 'Houve algum erro criar a interação'
-})
+});
 
 const WrongCredentials = createError('WrongCredentials', {
     message: 'Credenciais incorretas'
-})
+});
+
+const InvalidToken = createError('InvalidToken', {
+    message: 'Código Inválido'
+});
+
+const EmailNotExist = createError("EmailNotExist", {
+    message: "Email não existe"
+});
 
 export 
 { 
     WrongPasswordError ,
     WrongCredentials,
     EmailExist,
-    CantCreate
+    CantCreate,
+    InvalidToken,
+    EmailNotExist
 }

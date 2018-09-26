@@ -2,10 +2,12 @@ import UserConfigType from './types/userConfig.type';
 import UserType from './types/user.type';
 import MessageType from './types/message.type';
 import FileType from './types/files.type';
+import ChatType from './types/chat.type';
 
 import UserLoader from './Loaders/user.loader';
 import ConversationLoader from './Loaders/conversation.loader';
 import FileLoader from './Loaders/file.loader';
+import ChatLoader from './Loaders/chat.loader';
 
 import {
     GraphQLObjectType,
@@ -60,16 +62,16 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(UserType),
             resolve: (root, args) => UserLoader.flirtList(args)
         },
-        conversations: {
-            description: 'Conversas do usuario',
-            args: {
-                userId: {description:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
-                name: {description: 'Nome do usuario da conversa', type: GraphQLString},
-                offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
-            },
-            type: new GraphQLList(MessageType),
-            resolve: (_, args) => ConversationLoader.conversations(args)
-        },
+        // conversations: {
+        //     description: 'Conversas do usuario',
+        //     args: {
+        //         userId: {description:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
+        //         name: {description: 'Nome do usuario da conversa', type: GraphQLString},
+        //         offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
+        //     },
+        //     type: new GraphQLList(MessageType),
+        //     resolve: (_, args) => ConversationLoader.conversations(args)
+        // },
         messages: {
             description: 'Mensagens de uma conversa',
             args: {
@@ -98,14 +100,14 @@ const Query = new GraphQLObjectType({
             resolve: (root, args) => FileLoader.file(args)
         },
 
-        passwordReset: {
-            description: 'Verificar token e usuario',
+        chat: {
+            description: 'Conversas do usuario',
             args: {
-                token: {description: 'Token para resetar senha', type: GraphQLString},
-                email: {description: 'Email do usuario', type: GraphQLString}
+                receiver: {description: 'Id do participante da conversa', type: GraphQLInt},
+                sender: {description: 'Id do participante da conversa', type: GraphQLInt}
             },
-            type: new GraphQLList(UserType),
-            resolve: (_,args) => UserLoader.passwordReset(args)
+            type: new GraphQLList(ChatType),
+            resolve: (root, args) => ChatLoader.chat(args)
         }
     })
 });

@@ -17,11 +17,12 @@ module.exports = function(socket){
     })
 
     socket.on(PRIVATE_MESSAGE, async (data)=>{
+        console.log(data)
         const newChat = await createChat(data);
         const newMessage = await createMessage(data, newChat);
-        const reciever = await user.fetch({id: data.reciever});
-        console.log('send to: '+reciever.dataValues.socketId)
-		socket.broadcast.to(reciever.dataValues.socketId).emit(PRIVATE_MESSAGE, {newChat, newMessage})
+        const receiver = await user.fetch({id: data.receiver});
+        console.log('send to: '+receiver.dataValues.socketId)
+		socket.broadcast.to(receiver.dataValues.socketId).emit(PRIVATE_MESSAGE, {newChat, newMessage})
 		socket.emit(PRIVATE_MESSAGE, {newChat, newMessage})
 	})
 
@@ -55,10 +56,12 @@ module.exports = function(socket){
     async function createMessage(data, chat){
         const args = {
             sender: data.sender,
-            reciever: data.reciever,
+            receiver: data.receiver,
             content: data.message,
             chat: chat.id
         }
+
+        console.log(args)
         const message = await chatResolver.newMessage(args);
 
         return message;

@@ -21,6 +21,10 @@ const fetch = {
         });
     },
 
+    find: async function(args){
+        return User.findById(args.id)
+    },
+
     fetchAll: async function (args, res){
         let filter = {};
         for(let f in args){
@@ -96,17 +100,6 @@ const fetch = {
             return ret;
         });
     },
-
-    passwordReset: async function(args){
-        return User.findAll(
-            {
-                where:{
-                    email: args.email,
-                    $and:[{reset_pass: args.token}]
-                }
-            }
-        )
-    }
 
     
 }

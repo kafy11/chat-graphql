@@ -1,4 +1,5 @@
-import {User, Config, Conversation, Message} from '../../db/mysql';
+import { User, Config } from '../../db/mysql';
+import { InvalidToken, EmailNotExist } from '../errorHandler';
 // import {TokenGenerator} from 'uuid-token-generator';
 const TokenGenerator = require('uuid-token-generator');
 
@@ -49,25 +50,43 @@ const fetch = {
                 });
         },    
             
-        passwordResetToken: async function (args){
+        passwordResetToken: async function ({ email }){
+            const result = await User.findOne({
+                where: { email }
+            });
+
+            if(result) {
                 const tokgen = new TokenGenerator();
                 return await User.update(
-                    {reset_pass: tokgen.generate()},
-                    {where: {email: args.email}}
-                    )
+                        {reset_pass: tokgen.generate()},
+                        {where: { email }}
+                    ).then(user=>{
+                        console.log(user)
+                        return user
+                    });
+            } else {
+                throw new EmailNotExist();
+            }
         },
                 
-        passwordReset: async function (args){
-            return await User.update(
+        passwordReset: async function ({ email, token, password }){
+            const where = {
+                email,
+                reset_pass: token
+            };
+            const result = await User.findOne({ where });
+
+            if(result){
+                return await User.update(
                 {
-                    password: args.password,
+                    password,
                     reset_pass: null,
-                },
-                {
-                    where: {id: args.id}
-                }).then(user=>{
+                },{ where }).then(user=>{
                     return user
-                })
+                });
+            } else {
+                throw new InvalidToken();
+            }
         },
 
         socketId: async function (id, socketId) {
