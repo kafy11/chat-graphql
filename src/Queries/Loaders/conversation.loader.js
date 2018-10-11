@@ -9,11 +9,11 @@ const fetch = {
 
         return await Conn.query(`SELECT m.*
             FROM (
-                SELECT CASE WHEN authorId = ${args.userId} THEN receiverId ELSE authorId END AS userId,
+                SELECT CASE WHEN senderId = ${args.userId} THEN receiverId ELSE senderId END AS userId,
                                 MAX(id) AS id
                 FROM messages 
-                WHERE ${args.userId} IN (authorId,receiverId)
-                GROUP BY CASE WHEN authorId = ${args.userId} THEN receiverId ELSE authorId END
+                WHERE ${args.userId} IN (senderId,receiverId)
+                GROUP BY CASE WHEN senderId = ${args.userId} THEN receiverId ELSE senderId END
             ) l
             JOIN messages m
             ON m.id = l.id 

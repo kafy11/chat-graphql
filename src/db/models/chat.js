@@ -7,7 +7,7 @@ const schema = {
         autoIncrement: true,
         type: Sequelize.INTEGER,
         allowNull: false
-    },
+    }
 };
 
 export default schema;

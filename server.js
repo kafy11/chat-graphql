@@ -34,29 +34,21 @@ async function registerGraphql(){
                 debug: true
             }
         }
-    });
-    
+    });   
+
     await server.register({
         plugin: graphiqlHapi,
         options: {
             path:'/debug',
             graphiqlOptions: {
                 endpointURL: '/graph',
-                subscriptionsEndpoint: `ws://localhost:3000/subscriptions`,
-                formatError: (error) => ({key:error.key,message: error.message, location:error.location, stack:error.stack}),
+                formatError: (error) => ({message: error.message, location:error.location, stack:error.stack}),
                 debug: true
             }
         }
-    });
+   });
 
-    new SubscriptionServer({
-        execute,
-        subscribe,
-        schema: Schema
-      }, {
-        server: server.listener,
-        path: '/subscriptions',
-    });
+
 }
 
 async function registerRoutes(server){

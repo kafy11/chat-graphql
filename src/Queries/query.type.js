@@ -62,16 +62,16 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(UserType),
             resolve: (root, args) => UserLoader.flirtList(args)
         },
-        // conversations: {
-        //     description: 'Conversas do usuario',
-        //     args: {
-        //         userId: {description:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
-        //         name: {description: 'Nome do usuario da conversa', type: GraphQLString},
-        //         offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
-        //     },
-        //     type: new GraphQLList(MessageType),
-        //     resolve: (_, args) => ConversationLoader.conversations(args)
-        // },
+         conversations: {
+             description: 'Conversas do usuario',
+             args: {
+                 userId: {description:'Id do usuário logado',type: new GraphQLNonNull(GraphQLInt)},
+                 name: {description: 'Nome do usuario da conversa', type: GraphQLString},
+                 offsetMessage: {description: 'ID de mensagem para definir o offset da lista', type: GraphQLInt}
+             },
+             type: new GraphQLList(MessageType),
+             resolve: (_, args) => ConversationLoader.conversations(args)
+        },
         messages: {
             description: 'Mensagens de uma conversa',
             args: {
@@ -90,6 +90,15 @@ const Query = new GraphQLObjectType({
             resolve: (root, args) => UserLoader.config(args)
         },
 
+        unreadConversations: {
+            description: 'Pessoas que curtiram alguém mas não inicou uma conversa',
+            args: {
+                id: {description: 'id do usuário que recebeu as curtidas', type: GraphQLInt},
+                page: {description: 'pagina que deseja acessar', type: GraphQLInt}
+            },
+            type: new GraphQLList(UserType),
+            resolve: (root,args) => UserLoader.getUnreadConversations(args)
+        },
         file: {
             description: 'Arquivos',
             args: {
@@ -99,7 +108,15 @@ const Query = new GraphQLObjectType({
             type: new GraphQLList(FileType),
             resolve: (root, args) => FileLoader.file(args)
         },
-
+        file_type: {
+            description: 'Pega os arquivos por usuário e tipo',
+            args: {
+                type: {description: 'tipo do arquivo (photo, video, audio)', type: GraphQLString},
+                userId: {description:'id do usuario autor do arquivo', type: GraphQLInt}
+            },
+            type: new GraphQLList(FileType),
+            resolve: (root, args) => FileLoader.files(args)
+        },
         chat: {
             description: 'Conversas do usuario',
             args: {

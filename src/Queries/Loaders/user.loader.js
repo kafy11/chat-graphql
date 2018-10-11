@@ -101,6 +101,32 @@ const fetch = {
         });
     },
 
+    getUnreadConversations: async function(args,res){
+        let limit = 5;
+        let offset = 0 ;
+
+        if(args.page > 1){
+            limit = limit * args.page;
+            offset = limit-5;
+        }
+
+        return Like.findAll({
+            where: {user_liked_id: args.id},
+            limit,
+            offset
+        }).then(result=>{
+            let ret = [];
+
+            result.forEach((data)=>{
+                ret[data.user_id] = User.findById(data.user_id).then(result=>{return result});
+            });
+            
+            return ret; 
+        });
+
+        
+    }
+
     
 }
 

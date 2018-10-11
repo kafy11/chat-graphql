@@ -25,15 +25,15 @@ const graphObj = new GraphQLObjectType({
             type: GraphQLString, 
             description: 'data que a mensagem foi enviada'
         },
-        sender: {
+        author: {
             type: new GraphQLNonNull(UserType),
             description:'autor da mensagem',
-            // resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.authorId })
+            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.authorId })
         },
         receiver: {
             type: new GraphQLNonNull(UserType),
             description:'destinatario da mensagem',
-            // resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.receiverId })
+            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.receiverId })
         },
     }
 });
