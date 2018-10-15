@@ -1,4 +1,4 @@
-import { User, Config, Like } from '../../db/mysql';
+import Conn, { User, Config, Like, Chat } from '../../db/mysql';
 
 import sequelize from 'sequelize';
 
@@ -22,7 +22,7 @@ const fetch = {
     },
 
     find: async function(args){
-        return User.findById(args.id)
+        return User.findById(args.id).then(result=>{return result});
     },
 
     fetchAll: async function (args, res){
@@ -106,23 +106,28 @@ const fetch = {
         let offset = 0 ;
 
         if(args.page > 1){
-            limit = limit * args.page;
-            offset = limit-5;
+            offset = limit * args.page;
+            offset = offset-5;
         }
 
-        return Like.findAll({
-            where: {user_liked_id: args.id},
-            limit,
-            offset
-        }).then(result=>{
-            let ret = [];
+        let query = `
+        SELECT l.*
+        FROM likes l 
+        LEFT JOIN chats c ON c.participantId =  l.user_liked_id and c.participant2Id = l.user_id OR c.participantId = l.user_id and c.participant2Id = l.user_liked_id
+        WHERE l.user_liked_id=${args.id} and l.type = 'heart'and c.id is null
+        LIMIT ${offset},${limit}
+        `;
 
+        return Conn.query(query,{ model: Like} ).then(result=>{
+            let ret = [];
             result.forEach((data)=>{
                 ret[data.user_id] = User.findById(data.user_id).then(result=>{return result});
             });
             
             return ret; 
-        });
+        });     
+
+
 
         
     }

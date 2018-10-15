@@ -28,12 +28,12 @@ const graphObj = new GraphQLObjectType({
         author: {
             type: new GraphQLNonNull(UserType),
             description:'autor da mensagem',
-            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.authorId })
+            resolve: (parentValue, args) => UserLoader.find({ id: parentValue.senderId })
         },
         receiver: {
             type: new GraphQLNonNull(UserType),
             description:'destinatario da mensagem',
-            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.receiverId })
+            resolve: (parentValue, args) => UserLoader.find({ id: parentValue.receiverId })
         },
     }
 });
