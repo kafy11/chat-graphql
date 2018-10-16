@@ -35,6 +35,10 @@ const graphObj = new GraphQLObjectType({
             description:'destinatario da mensagem',
             resolve: (parentValue, args) => UserLoader.find({ id: parentValue.receiverId })
         },
+        chatId: {
+            type: new GraphQLNonNull(GraphQLInt),
+            description:'id do chat'
+        },
     }
 });
 

@@ -1,4 +1,4 @@
-import {USER_CONNECTED, MESSAGE_SEND, PRIVATE_MESSAGE} from './events';
+import {USER_CONNECTED, MESSAGE_SEND, PRIVATE_MESSAGE,MESSAGE_RECEIVED} from './events';
 import user from '../Queries/Loaders/user.loader';
 import chatLoader from '../Queries/Loaders/chat.loader';
 import userResolver from '../Mutations/Resolvers/user.resolver';
@@ -17,14 +17,15 @@ module.exports = function(socket){
     })
 
     socket.on(PRIVATE_MESSAGE, async (data)=>{
-        console.log(data)
         const newChat = await createChat(data);
         const newMessage = await createMessage(data, newChat);
         const receiver = await user.fetch({id: data.receiver});
-        console.log('send to: '+receiver.dataValues.socketId)
-		socket.broadcast.to(receiver.dataValues.socketId).emit(PRIVATE_MESSAGE, {newChat, newMessage})
-		socket.emit(PRIVATE_MESSAGE, {newChat, newMessage})
-	})
+        
+		socket.broadcast.to(receiver.dataValues.socketId).emit(MESSAGE_RECEIVED, {newChat, newMessage})
+		socket.emit(MESSAGE_RECEIVED, {newChat, newMessage})
+    });
+    
+    
 
     // socket.on('disconnect', ()=>{
     //     if('user' in socket){
@@ -61,10 +62,11 @@ module.exports = function(socket){
             chat: chat.id
         }
 
-        console.log(args)
+        
         const message = await chatResolver.newMessage(args);
-
-        return message;
+        let ret = {id:message.id,content:message.content,createdAt:message.createdAt,author:{id:message.senderId},receiver: {id:message.receiverId}};
+        //return message;
+        return ret;
     }
 
     // function addUser(userList, user){

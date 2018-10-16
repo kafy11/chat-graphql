@@ -28,7 +28,7 @@ const fetch = {
 
     messages: async function ({ ids, offsetMessage }){
         let where = { 
-            authorId: { 
+            senderId: { 
                 $in: ids
             },
             receiverId: { 
