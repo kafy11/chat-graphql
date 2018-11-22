@@ -11,6 +11,22 @@ const result = {
                 {where: {id:options.user}}
             );
         }
+    },
+    delete: async function(args){
+        if(args['type'] !== 'profile'){
+            return File.destroy({
+                where: {
+                    name:args['image_name'],
+                    userId:args['user_id']
+                }
+            });
+        }
+        else{
+            return User.update(
+                {photo: ''},
+                {where: {id:args['user_id']}}
+            );
+        }
     }
 }
 

@@ -119,6 +119,29 @@ async function registerRoutes(server){
         }
     });
 
+    server.route({
+        method: 'DELETE',
+        path: '/upload',
+        handler: async function (request, reply) {
+            const UPLOAD_PATH = 'uploads';
+
+            try{
+                const data = request.payload;
+                if(!data['user_id'] || !data['image_name']){
+                    return 'Faltam parâmetros';
+                }
+                
+                const del = await upload.delete(data);    
+                
+                //fs.unlinkSync(UPLOAD_PATH+'/'+data['image_name']);    
+                return true;
+
+            } catch (err){
+                return Boom.badRequest(err.message, err);
+            }
+        }
+    });
+
     
     
     await registerGraphql();
@@ -153,6 +176,8 @@ const _fileHandler = function (file, options) {
                 path,
                 size: fs.statSync(path).size,
             }
+
+            //console.log('details',fileDetails);
             
             resolve(fileDetails);
         })

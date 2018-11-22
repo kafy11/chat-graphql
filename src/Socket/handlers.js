@@ -32,7 +32,7 @@ module.exports = function(socket){
     //         connectedUsers = removeUser(connectedUsers, socket.user.name)
     //     }
     // })
-
+ 
     async function getUser(id, socketId){
         const args = {id:id}
         const query = await user.fetch(args);
