@@ -2,44 +2,39 @@ import {
     GraphQLObjectType,
     GraphQLNonNull,
     GraphQLString,
-    GraphQLInt,
-    GraphQLFloat,
-    GraphQLList
+    GraphQLInt
 } from 'graphql';
+
 import UserType from './user.type';
 import UserLoader from '../Loaders/user.loader';
 
-const graphObj = new GraphQLObjectType({
-    name:"Conversation",
-    description:"Api de chat de usuario",
+const MessageType = new GraphQLObjectType({
+    name: "Conversation",
+    description: "API de chat de usuario",
     fields: {
         id: {
             type: new GraphQLNonNull(GraphQLInt),
-            description:'id da mensagem'
+            description:'ID da mensagem'
         },
         content: {
             type: new GraphQLNonNull(GraphQLString),
-            description:'conteudo da mensagem'
-        },
-        createdAt: {
-            type: GraphQLString, 
-            description: 'data que a mensagem foi enviada'
+            description:'Conteúdo da mensagem'
         },
         author: {
             type: new GraphQLNonNull(UserType),
-            description:'autor da mensagem',
-            resolve: (parentValue, args) => UserLoader.find({ id: parentValue.senderId })
+            description: 'autor da mensagem',
+            resolve: ({ senderId: id }) => UserLoader.find({ id })
         },
         receiver: {
             type: new GraphQLNonNull(UserType),
             description:'destinatario da mensagem',
-            resolve: (parentValue, args) => UserLoader.find({ id: parentValue.receiverId })
+            resolve: ({ receiverId: id }, args) => UserLoader.find({ id })
         },
         chatId: {
             type: new GraphQLNonNull(GraphQLInt),
-            description:'id do chat'
+            description:'ID do chat'
         },
     }
 });
 
-export default graphObj;
+export default MessageType;

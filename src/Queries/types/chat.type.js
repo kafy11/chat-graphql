@@ -1,38 +1,32 @@
 import {
     GraphQLObjectType,
-    GraphQLNonNull,
-    GraphQLString,
     GraphQLInt,
-    GraphQLFloat,
     GraphQLList
 } from 'graphql';
 
 import UserType from './user.type';
 import UserLoader from '../Loaders/user.loader'
 
-const graphObj = new GraphQLObjectType({
-    name:"Chat",
-    description:"Api de chat de usuario",
+const ChatType = new GraphQLObjectType({
+    name: "Chat",
+    description: "API de chat de usuario",
     fields: {
         id: {
             type: GraphQLInt,
-            description:'id do chat'
+            description:'ID do chat'
         },
-        sender: {
-            type: new GraphQLNonNull(UserType),
-            description:'Participante da conversa',
-            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.sender })
-        },
-        receiver: {
-            type: new GraphQLNonNull(UserType),
-            description:'Participante da conversa',
-            resolve: (parentValue, args) => UserLoader.fetch({ id: parentValue.receiver })
-        },
-        createdAt: {
-            type: GraphQLString, 
-            description: 'data que a conversa foi iniciada'
-        },
+        participants: {
+            type: new GraphQLList(UserType),
+            description: 'Participante da conversa',
+            resolve: async ({ dataValues }) => {
+                const { participant1Id, participant2Id } = dataValues;
+
+                const user1 = await UserLoader.fetch({ id: participant1Id });
+                const user2 = await UserLoader.fetch({ id: participant2Id });
+                return [user1, user2];
+            }
+        }
     }
 });
 
-export default graphObj;
+export default ChatType;

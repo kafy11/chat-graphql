@@ -1,19 +1,32 @@
-import { Message, Chat } from '../../db/mysql';
+import { Chat, Message } from '../../db/sqlite';
 
-import sequelize from 'sequelize';
-
-const fetch = {
-    chat: async function (args){
-        return Chat.find({
+const ChatLoader = {
+    fetch: async function ({ userId }){
+        return await Chat.findAll({
             where: {
-                $and: [
-                    {participantId: {[sequelize.Op.or]: [args.sender, args.receiver]}},
-                    {participant2Id: {[sequelize.Op.or]: [args.receiver, args.sender]}},
+                $or: [
+                    { participant1Id: userId },
+                    { participant2Id: userId },
                 ],
             }
         })
     },
+    messages: async function ({ chatId, offsetMessage }){
+        let where = { 
+            chatId
+        };
+
+        if(offsetMessage) {
+            where.id = { $lt: offsetMessage };
+        }
+
+        return await Message.findAll({
+            order: [['id', 'DESC']],
+            limit: 10,
+            where 
+        });
+    },
 }
 
-export default fetch;
+export default ChatLoader;
 

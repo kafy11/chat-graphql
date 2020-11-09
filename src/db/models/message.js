@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 
-const schema = {
+const messageModel = {
     id: {
         unique: true,
         primaryKey: true,
@@ -8,16 +8,11 @@ const schema = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    from: {
-        type: Sequelize.INTEGER(2),
-        allowNull: false
-    },
-    to: {
-        type: Sequelize.INTEGER(2),
+    content: {
+        type: Sequelize.TEXT,
         allowNull: false
     },
     createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
 };
 
-export default schema;
+export default messageModel;

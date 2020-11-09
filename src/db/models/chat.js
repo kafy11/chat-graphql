@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 
-const schema = {
+const chatModel = {
     id: {
         unique: true,
         primaryKey: true,
@@ -10,4 +10,4 @@ const schema = {
     }
 };
 
-export default schema;
+export default chatModel;
